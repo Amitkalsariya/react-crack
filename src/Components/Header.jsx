@@ -1,101 +1,74 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Menu, MenuItem } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
-const Header = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+const drawerWidth = 240;
 
-  const toggleDrawer = () => {
-    setOpenDrawer(!openDrawer);
-  };
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null);
-  };
-
+export default function PermanentDrawerLeft() {
   return (
-    <>
-      <AppBar position="static">
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+      >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer}
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Portal Name
+          <Typography variant="h6" noWrap component="div">
+            Permanent drawer
           </Typography>
-          <IconButton color="inherit" onClick={handleProfileMenuOpen}>
-            <AccountCircleIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <NotificationsIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <SettingsIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="permanent"
         anchor="left"
-        open={openDrawer}
-        onClose={toggleDrawer}
       >
+       
+        <ListItem sx={{ backgroundColor: "#1976d2" }}>
+            <ListItemText primary="Interview Portal" sx={{ padding: "8px", color: "white" }} />
+          </ListItem>
+        <Divider />
         <List>
-          <ListItem button>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Products" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Orders" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Customers" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Settings" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Logout" />
-          </ListItem>
+          {['Dashboard', 'Category', 'Sub Category', 'Q & A'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
+      
+        
       </Drawer>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleProfileMenuClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
       >
-        <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
-        <MenuItem onClick={handleProfileMenuClose}>Logout</MenuItem>
-      </Menu>
-    </>
+        <Toolbar />
+       
+      </Box>
+    </Box>
   );
-};
-
-export default Header;
+}

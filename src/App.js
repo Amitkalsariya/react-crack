@@ -3,6 +3,7 @@ import './App.css';
 import React from "react";
 import Login from './Login';
 import Header from './Components/Header';
+import Dashboard from './Pages/Dashboard';
 
 import {
   BrowserRouter as Router,
@@ -16,6 +17,8 @@ function App() {
     <div className="App">
       {/* <Login></Login> */}
       <Header></Header>
+      
+
       {/* <Router>
         <Switch>
           <Route exact path="/Login">

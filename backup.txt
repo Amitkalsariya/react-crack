@@ -1,0 +1,56 @@
+import * as React from 'react';
+import { useState } from 'react';
+import { Drawer, List, ListItem, ListItemText, Divider, Hidden } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SettingsIcon from '@mui/icons-material/Settings';
+
+const HeaderDrawer = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Hidden mdDown>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: 240,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: 230,
+            boxSizing: 'border-box',
+          },
+        }}
+        open
+      >
+        <List sx={{ paddingTop: "0px" }}>
+          <ListItem sx={{ backgroundColor: "#1976d2" }}>
+            <ListItemText primary="Interview Portal" sx={{ padding: "8px", color: "white" }} />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary="Category" />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary="Sub Category" />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary="Q & A" />
+          </ListItem>
+        </List>
+      </Drawer>
+    </Hidden>
+  );
+};
+
+export default HeaderDrawer;
