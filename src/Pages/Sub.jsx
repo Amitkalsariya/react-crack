@@ -8,10 +8,10 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
-export default function Category() {
+export default function Sub() {
   const top100Films = [
-    { label: 'Amit' },
-    { label: 'Rupit' },
+    { label: 'Full Stack' },
+    { label: 'Front-End' },
   ];
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -27,7 +27,7 @@ export default function Category() {
           renderInput={(params) => <TextField {...params} label="Search Category" />}
         />
 
-        <Button variant="contained">Add To Category</Button>
+        <Button variant="contained">Add Sub Category</Button>
 
       </Stack>
       <br />

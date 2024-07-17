@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Switch from '@mui/material/Switch';
@@ -7,31 +7,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-
-export default function Category() {
-  const top100Films = [
-    { label: 'Amit' },
-    { label: 'Rupit' },
-  ];
-
+const Queue = () => {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
   return (
-    <>
-      <Stack spacing={2} direction="row">
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={top100Films}
-          sx={{ width: 800 }}
-          renderInput={(params) => <TextField {...params} label="Search Category" />}
-        />
+    <div>
+       <Button variant="contained">Add Q & A</Button><br /> <br />
 
-        <Button variant="contained">Add To Category</Button>
-
-      </Stack>
-      <br />
-      <table border={0} width="100%" cellPadding={15} cellSpacing={0} >
+       <table border={0} width="100%" cellPadding={15} cellSpacing={0} >
         <thead>
           <tr style={{boxShadow:'0px 0px 3px #ccc'}}>
             <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: "normal" }}>No</th>
@@ -65,6 +47,9 @@ export default function Category() {
           </tr>
         </tbody>
       </table>
-    </>
-  );
+    </div>
+  )
 }
+
+export default Queue
+
