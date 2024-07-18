@@ -6,17 +6,17 @@ import CardContent from '@mui/material/CardContent';
 
 export default function BoxSystemProps() {
   return (
-    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-      <Grid item xs={12} sm={4}>
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={6} md={4}>
         <Box
           height={150}
           width={300}
-          my={1}
+         
           display="flex"
           alignItems="center"
+          flexDirection="column"
           justifyContent="center"
-          gap={4}
-          p={3}
+          p={2}
           sx={{
             boxShadow: '0px 0px 5px rgb(204, 204, 204)',
             borderRadius: '10px',
@@ -36,12 +36,12 @@ export default function BoxSystemProps() {
         <Box
           height={150}
           width={300}
-          my={1}
+         
           display="flex"
           alignItems="center"
           justifyContent="center"
-          gap={4}
-          p={3}
+          flexDirection="column"
+          p={2}
           sx={{
             boxShadow: '0px 0px 5px rgb(204, 204, 204)',
             borderRadius: '10px',
@@ -61,12 +61,13 @@ export default function BoxSystemProps() {
         <Box
           height={150}
           width={300}
-          my={1}
+          
           display="flex"
           alignItems="center"
+          flexDirection="column"
           justifyContent="center"
-          gap={4}
-          p={3}
+         
+          p={2}
           sx={{
             boxShadow: '0px 0px 5px rgb(204, 204, 204)',
             borderRadius: '10px',
