@@ -18,10 +18,6 @@ export default function Sub() {
     { label: 'Front-End' },
   ];
 
-  const top101Films = [
-    { label: 'A' },
-    { label: 'N' },
-  ];
 
   const [open, setOpen] = React.useState(false);
 
@@ -42,7 +38,7 @@ export default function Sub() {
           disablePortal
           id="combo-box-demo"
           options={top100Films}
-          sx={{ minWidth: 300 }}
+          sx={{ minWidth: 800 }}
           renderInput={(params) => <TextField {...params} label="Search Category" />}
         />
       </Grid>

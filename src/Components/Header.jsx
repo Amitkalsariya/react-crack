@@ -13,17 +13,64 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Dashboard from '../Pages/Dashboard';
-import Category from '../Pages/Category';
-import Sub from '../Pages/Sub';
-import Queue from '../Pages/Queue';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Sub from '../Pages/Sub';
+import Queue from '../Pages/Queue';
+import Dashboard from '../Pages/Dashboard';  
+import Category from '../Pages/Category';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
+
 
 const drawerWidth = 240;
 
-export default function PermanentDrawerLeft() {
+const navItems = [
+  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+  { text: 'Category', icon: <CategoryIcon />, path: '/Category' },
+  { text: 'Sub Category', icon: <ListAltIcon />, path: '/Sub' },
+  { text: 'Q & A', icon: <MailIcon />, path: '/Queue' },
+];
+
+export default function Header() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div>
+      <Toolbar />
+     
+      <List>
+        {/* <ListItem sx={{ backgroundColor: '#1976d2', paddingTop: 0 }}>
+          <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2 }} />
+        </ListItem> */}
+        <Divider />
+        {navItems.map((item) => (
+          <ListItem
+            key={item.text}
+            disablePadding
+            component={Link}
+            to={item.path}
+            onClick={handleDrawerToggle}
+            sx={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <ListItemButton>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
   return (
     <Router>
       <Box sx={{ display: 'flex' }}>
@@ -32,56 +79,62 @@ export default function PermanentDrawerLeft() {
           position="fixed"
           sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
         >
-          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="h6" noWrap component="div">
-              Permanent drawer
+          <Toolbar>
+          <IconButton
+            color="black"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+              Permanent Drawer
             </Typography>
-            <MeetingRoomIcon />
+            <MeetingRoomIcon/>
           </Toolbar>
         </AppBar>
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-            },
-          }}
-          variant="permanent"
-          anchor="left"
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders"
         >
-          <ListItem sx={{ backgroundColor: '#1976d2' }}>
-            <ListItemText
-              primary="Interview Portal"
-              sx={{ padding: '8px', color: 'white' }}
-            />
-          </ListItem>
-          <Divider />
-          <List>
-            {[
-              { text: 'Dashboard', icon: <InboxIcon />, path: '/' },
-              { text: 'Category', icon: <MailIcon />, path: '/Category' },
-              { text: 'Sub Category', icon: <InboxIcon />, path: '/Sub' },
-              { text: 'Q & A', icon: <MailIcon />, path: '/Queue' },
-            ].map((item, index) => (
-              <ListItem
-                key={item.text}
-                disablePadding
-                component={Link}
-                to={item.path}
-              >
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            open
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            bgcolor: 'background.default',
+            p: 3,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+          }}
+        >
           <Toolbar />
           <Switch>
             <Route exact path="/" component={Dashboard} />

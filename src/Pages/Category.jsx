@@ -40,7 +40,7 @@ export default function Category() {
           disablePortal
           id="combo-box-demo"
           options={top100Films}
-          sx={{ minWidth: 950 }}
+          sx={{ minWidth: 800 }}
           renderInput={(params) => <TextField {...params} label="Search Category" />}
         />
       </Grid>
