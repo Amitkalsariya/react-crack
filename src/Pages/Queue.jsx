@@ -1,18 +1,42 @@
-import React from 'react';
+import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Formik, Form, Field } from 'formik'; // Import Formik components
+import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
+import { Form,Formik } from 'formik';
 
-const Queue = () => {
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+const ResponsiveTable = styled('table')({
+  width: '100%',
+  borderCollapse: 'collapse',
+  overflowX: 'auto',
+  '& th, td': {
+    padding: '15px',
+    borderBottom: '1px solid #ccc',
+    textAlign: 'center',
+    '@media (max-width: 768px)': {
+      fontSize: '14px',
+      padding: '10px',
+    },
+  },
+  '& th': {
+    backgroundColor: 'rgb(25,118,210)',
+    color: 'white',
+    fontWeight: 'normal',
+  },
+});
+
+export default function C1() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -24,107 +48,116 @@ const Queue = () => {
   };
 
   return (
-    <div>
-      <React.Fragment>
-        <Button sx={{ padding: '15px' }} variant="contained" onClick={handleClickOpen}>
-          Add Q & A
-        </Button>
-        <br /> <br />
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            component: 'form',
-            onSubmit: (event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              console.log(formJson);
-              handleClose();
-            },
-          }}
-        >
-          <DialogTitle>Add Q & A</DialogTitle>
-          <DialogContent>
-            <Formik
-              initialValues={{ question1: '', description: '' }}
-              onSubmit={(values, { resetForm }) => {
-                console.log(values);
-                resetForm();
-                handleClose();
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
+        
+          <React.Fragment>
+            <Button variant="contained" onClick={handleClickOpen}>
+              Add category
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                component: 'form',
+                onSubmit: (event) => {
+                  event.preventDefault();
+                  const formData = new FormData(event.currentTarget);
+                  const formJson = Object.fromEntries(formData.entries());
+                  const email = formJson.email;
+                  console.log(email);
+                  handleClose();
+                },
               }}
             >
-              <Form>
-                <Field
-                  autoFocus
-                  component={TextField}
-                  margin="dense"
-                  id="question1"
-                  name="question1"
-                  label="Question 1"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-                <Field
-                  autoFocus
-                  component={TextField}
-                  margin="dense"
-                  id="description"
-                  name="description"
-                  label="Description"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Form>
-            </Formik>
-          </DialogContent>
-          <DialogActions>
-           
-            <Button variant="contained" type="submit">
-              Submit
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </React.Fragment>
-
-      <table border={0} width="100%" cellPadding={15} cellSpacing={0}>
-        <thead>
-          <tr style={{ boxShadow: '0px 0px 3px #ccc' }}>
-            <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: 'normal' }}>No</th>
-            <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: 'normal' }}>Category</th>
-            <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: 'normal' }}>Status</th>
-            <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: 'normal' }}>Delete</th>
-            <th style={{ backgroundColor: 'rgb(25, 118, 210)', color: 'white', fontWeight: 'normal' }}>Update</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr align="center" style={{ boxShadow: '0px 0px 3px #ccc' }}>
-            <td>1</td>
-            <td>Amit</td>
-            <td><Switch {...label} defaultChecked /></td>
-            <td><DeleteIcon /></td>
-            <td><EditIcon /></td>
-          </tr>
-          <tr align="center">
-            <td>2</td>
-            <td>Chandu</td>
-            <td><Switch {...label} defaultChecked /></td>
-            <td><DeleteIcon /></td>
-            <td><EditIcon /></td>
-          </tr>
-          <tr align="center" style={{ boxShadow: '0px 0px 3px #ccc' }}>
-            <td>3</td>
-            <td>Mandu</td>
-            <td><Switch {...label} defaultChecked /></td>
-            <td><DeleteIcon /></td>
-            <td><EditIcon /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              <DialogTitle>Add category</DialogTitle>
+              <DialogContent>
+                <DialogContentText></DialogContentText>
+                <Formik>
+                  <Form>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      name="cetegory"
+                      label="Add category"
+                      type="text"
+                      fullWidth
+                      variant="outlined"
+                    />
+                  </Form>
+                </Formik>
+              </DialogContent>
+              <DialogActions>
+                <Button type="submit" variant="contained">
+                  Submit
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </React.Fragment>
+        </Stack>
+      </Grid>
+      <Grid item xs={12}>
+        <ResponsiveTable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Category Name</th>
+              <th>Status</th>
+              <th>Delete</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Amit</td>
+              <td>
+                <FormControlLabel control={<Switch defaultChecked />} />
+              </td>
+              <td>
+                <DeleteIcon />
+              </td>
+              <td>
+                <EditIcon />
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>N</td>
+              <td>
+                <FormControlLabel control={<Switch defaultChecked />} />
+              </td>
+              <td>
+                <DeleteIcon />
+              </td>
+              <td>
+                <EditIcon />
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Category</td>
+              <td>
+                <FormControlLabel control={<Switch defaultChecked />} />
+              </td>
+              <td>
+                <DeleteIcon />
+              </td>
+              <td>
+                <EditIcon />
+              </td>
+            </tr>
+          </tbody>
+        </ResponsiveTable>
+      </Grid>
+    </Grid>
   );
 }
 
-export default Queue;
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+const top100Films = [
+  { label: 'Amit', year: 1994 },
+  { label: 'N', year: 1972 },
+];

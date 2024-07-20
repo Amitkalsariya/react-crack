@@ -24,16 +24,19 @@ import Dashboard from '../Pages/Dashboard';
 import Category from '../Pages/Category';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 
 
 const drawerWidth = 240;
 
 const navItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },
   { text: 'Category', icon: <CategoryIcon />, path: '/Category' },
-  { text: 'Sub Category', icon: <ListAltIcon />, path: '/Sub' },
-  { text: 'Q & A', icon: <MailIcon />, path: '/Queue' },
+  { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/Sub' },
+  { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/Queue' },
 ];
 
 export default function Header() {
@@ -45,13 +48,13 @@ export default function Header() {
 
   const drawer = (
     <div>
-      <Toolbar />
+    
      
-      <List>
-        {/* <ListItem sx={{ backgroundColor: '#1976d2', paddingTop: 0 }}>
+      <List style={{paddingTop:"0"}}>
+         <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
           <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2 }} />
-        </ListItem> */}
-        <Divider />
+        </ListItem>
+    
         {navItems.map((item) => (
           <ListItem
             key={item.text}
