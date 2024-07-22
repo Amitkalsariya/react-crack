@@ -6,16 +6,15 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+
+
 import CategoryIcon from '@mui/icons-material/Category';
-import ListAltIcon from '@mui/icons-material/ListAlt';
+
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Sub from '../Pages/Sub';
@@ -47,10 +46,10 @@ export default function Header() {
   };
 
   const drawer = (
-    <div>
+    <div className=''>
     
      
-      <List style={{paddingTop:"0"}}>
+      <List style={{paddingTop:"0",marginLeft:"0"}}>
          <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
           <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2 }} />
         </ListItem>
@@ -80,11 +79,14 @@ export default function Header() {
         <CssBaseline />
         <AppBar
           position="fixed"
-          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+          sx={{
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            ml: { sm: `${drawerWidth}px` },
+        }}
         >
           <Toolbar>
           <IconButton
-            color="black"
+            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -93,7 +95,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Permanent Drawer
+              Dashboard
             </Typography>
             <MeetingRoomIcon/>
           </Toolbar>
