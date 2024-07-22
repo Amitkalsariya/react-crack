@@ -26,7 +26,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
+import Login from '../Login';
 
 
 const drawerWidth = 240;
@@ -74,7 +74,7 @@ export default function Header() {
   );
 
   return (
-    <Router>
+
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar
@@ -141,14 +141,9 @@ export default function Header() {
           }}
         >
           <Toolbar />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/Category" component={Category} />
-            <Route path="/Sub" component={Sub} />
-            <Route path="/Queue" component={Queue} />
-          </Switch>
+        
         </Box>
       </Box>
-    </Router>
+ 
   );
 }

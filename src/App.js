@@ -3,8 +3,10 @@ import logo from './logo.svg';
 import React from "react";
 import Login from './Login';
 import Header from './Components/Header';
-import Dashboard from './Pages/Dashboard';
-
+import Sub from './Pages/Sub';
+import Queue from './Pages/Queue';
+import Dashboard from './Pages/Dashboard';  
+import Category from './Pages/Category';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,18 +17,15 @@ import {
 function App() {
   return (
     <div className="App">
-    {/* <Login></Login> */}
-      <Header></Header>
-      
-      
-
-      {/* <Router>
-        <Switch>
-          <Route exact path="/Login">
-            <Login></Login>
-          </Route>
-        </Switch>
-      </Router> */}
+       <Router>
+       <Switch>
+            <Route exact path="/" component={Login} />
+            <Route path="/Dashboard" component={Dashboard} />
+            <Route path="/Category" component={Category} />
+            <Route path="/Sub" component={Sub} />
+            <Route path="/Queue" component={Queue} />
+          </Switch>
+       </Router>
     </div>
   );
 }
