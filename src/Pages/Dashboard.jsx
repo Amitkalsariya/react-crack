@@ -17,8 +17,8 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        <Grid item xs >
+    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 12, md: 8 }}>
+        <Grid item xs > 
             <Item sx={{ boxShadow: '1px 1px 1px -1px rgba(0,0,0,0.2),0px 1px 7px 1px rgba(0,0,0,0.14),0px 1px 1px 0px rgba(0,0,0,0.12)' }}>
                 <h5 style={{ fontSize: '30px', fontWeight: '700', color: 'black', margin: '0' }}> Total Category </h5>
                 <h4 style={{ fontSize: '50px', fontWeight: '700', color: 'black', margin: '0' }}>6</h4>
