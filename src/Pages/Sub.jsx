@@ -14,8 +14,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
-import { Form,Formik } from 'formik';
-
+import { Field, Form, Formik } from 'formik';
+import Header from '../Components/Header';
 const ResponsiveTable = styled('table')({
   width: '100%',
   borderCollapse: 'collapse',
@@ -38,7 +38,13 @@ const ResponsiveTable = styled('table')({
 
 export default function C1() {
   const [open, setOpen] = React.useState(false);
-
+const handleD=(values)=>{
+  try {
+    console.log(values);
+  } catch (error) {
+    console.log(error);
+  }
+}
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -48,117 +54,122 @@ export default function C1() {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={top100Films}
-            sx={{ width: 864 }}
-            renderInput={(params) => <TextField {...params} label="Movie" />}
-          />
-          <React.Fragment>
-            <Button variant="contained" onClick={handleClickOpen}>
-              Add category
-            </Button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              PaperProps={{
-                component: 'form',
-                onSubmit: (event) => {
-                  event.preventDefault();
-                  const formData = new FormData(event.currentTarget);
-                  const formJson = Object.fromEntries(formData.entries());
-                  const email = formJson.email;
-                  console.log(email);
-                  handleClose();
-                },
-              }}
-            >
-              <DialogTitle>Add category</DialogTitle>
-              <DialogContent>
-                <DialogContentText></DialogContentText>
-                <Formik>
-                  <Form>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      name="cetegory"
-                      label="Add category"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </Form>
-                </Formik>
-              </DialogContent>
-              <DialogActions>
-                <Button type="submit" variant="contained">
-                  Submit
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </React.Fragment>
-        </Stack>
+    <Header>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{ width: 864 }}
+              renderInput={(params) => <TextField {...params} label="Movie" />}
+            />
+            <React.Fragment>
+              <Button variant="contained" onClick={handleClickOpen}>
+                Add Sub Category
+              </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+
+              >
+                <DialogTitle>Add Sub Category</DialogTitle>
+                <DialogContent>
+                  <DialogContentText></DialogContentText>
+                  <Formik onSubmit={handleD}
+                  initialValues={{subcetegory:'',cetegoryname:''}}>
+                    <Form>
+                      <Field
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        name="subcetegory"
+                        label="Sub category"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        as={TextField}
+                      />
+                      <Field
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        name="cetegoryname"
+                        label="Category Name"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        as={TextField}
+                      />
+                      <DialogActions>
+                        <Button type="submit" variant="contained">
+                          Submit
+                        </Button>
+                      </DialogActions>
+                    </Form>
+                  </Formik>
+                </DialogContent>
+              </Dialog>
+            </React.Fragment>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <ResponsiveTable>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Category Name</th>
+                <th>Status</th>
+                <th>Delete</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Amit</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>N</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Category</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+            </tbody>
+          </ResponsiveTable>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <ResponsiveTable>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Category Name</th>
-              <th>Status</th>
-              <th>Delete</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Amit</td>
-              <td>
-                <FormControlLabel control={<Switch defaultChecked />} />
-              </td>
-              <td>
-                <DeleteIcon />
-              </td>
-              <td>
-                <EditIcon />
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>N</td>
-              <td>
-                <FormControlLabel control={<Switch defaultChecked />} />
-              </td>
-              <td>
-                <DeleteIcon />
-              </td>
-              <td>
-                <EditIcon />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Category</td>
-              <td>
-                <FormControlLabel control={<Switch defaultChecked />} />
-              </td>
-              <td>
-                <DeleteIcon />
-              </td>
-              <td>
-                <EditIcon />
-              </td>
-            </tr>
-          </tbody>
-        </ResponsiveTable>
-      </Grid>
-    </Grid>
+    </Header>
   );
 }
 

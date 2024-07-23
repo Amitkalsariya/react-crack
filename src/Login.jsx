@@ -17,7 +17,7 @@ function Login() {
     try {
       var res = await axios.post("https://interviewhub-3ro7.onrender.com/admin/login", values)
       console.log(res);
-      history.push("/Header")
+      history.push("/Dashboard")
     } catch (error) {
       console.log(error);
     }

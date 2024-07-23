@@ -16,8 +16,14 @@ import ListItemText from '@mui/material/ListItemText';
 import CategoryIcon from '@mui/icons-material/Category';
 
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Sub from '../Pages/Sub';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+import Sub from '../Pages/Sub'; 
 import Queue from '../Pages/Queue';
 import Dashboard from '../Pages/Dashboard';  
 import Category from '../Pages/Category';
@@ -32,13 +38,13 @@ import Login from '../Login';
 const drawerWidth = 240;
 
 const navItems = [
-  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },
+  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/Dashboard' },
   { text: 'Category', icon: <CategoryIcon />, path: '/Category' },
   { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/Sub' },
   { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/Queue' },
 ];
 
-export default function Header() {
+export default function Header({children}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -51,7 +57,7 @@ export default function Header() {
      
       <List style={{paddingTop:"0",marginLeft:"0"}}>
          <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
-          <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2 }} />
+          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2 }} />
         </ListItem>
     
         {navItems.map((item) => (
@@ -141,9 +147,9 @@ export default function Header() {
           }}
         >
           <Toolbar />
-        
+         {children}
         </Box>
       </Box>
- 
+     
   );
 }
