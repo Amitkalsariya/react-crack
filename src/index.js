@@ -5,9 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+
 } from "react-router-dom";  
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -18,21 +18,14 @@ import CategoryIcon from '@mui/icons-material/Category';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
-
-import Sub from '../Pages/Sub'; 
-import Queue from '../Pages/Queue';
-import Dashboard from '../Pages/Dashboard';  
-import Category from '../Pages/Category';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import Login from '../Login';
+
 
 
 const drawerWidth = 240;

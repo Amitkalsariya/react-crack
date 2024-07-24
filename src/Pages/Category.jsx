@@ -16,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
 import { Field, Form, Formik } from 'formik';
 import Header from '../Components/Header';
+import axios from 'axios';
 
 const ResponsiveTable = styled('table')({
   width: '100%',
@@ -39,14 +40,46 @@ const ResponsiveTable = styled('table')({
 
 export default function Category() {
   const [open, setOpen] = React.useState(false);
+
   const [data, setData] = React.useState([])
-  const handleData = (setData) => {
-    try {
-      console.log(setData);
-    } catch (error) {
-      console.log(error);
-    }
+  const token = localStorage.getItem("token")
+  console.log("token ==> ", token);
+  React.useEffect(()=>{
+    add()
+  },[])
+  function add() {
+    axios.get("https://interviewhub-3ro7.onrender.com/catagory/",{
+      headers:
+      {
+        Authorization:token
+      }
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        setData(res.data.data)
+        add()
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
+  const handleData = (values) => {
+    axios.post("https://interviewhub-3ro7.onrender.com/catagory/create", values, {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log("success");
+
+        handleClose()
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -74,20 +107,20 @@ export default function Category() {
               <Dialog
                 open={open}
                 onClose={handleClose}
-              
+
               >
                 <DialogTitle>Add category</DialogTitle>
                 <DialogContent>
                   <DialogContentText></DialogContentText>
                   <Formik
-                    initialValues={{ cetegory: '' }}
+                    initialValues={{ catagoryName: '' }}
                     onSubmit={handleData}>
                     <Form>
                       <Field
                         autoFocus
                         margin="dense"
                         id="name"
-                        name="cetegory"
+                        name="catagoryName"
                         label="Add category"
                         type="text"
                         fullWidth
@@ -95,7 +128,7 @@ export default function Category() {
                         as={TextField}
                       />
                       <DialogActions>
-                        <Button type="submit" variant="contained">
+                        <Button type="submit" variant="contained" onClick={add}>
                           Submit
                         </Button>
                       </DialogActions>
@@ -117,7 +150,7 @@ export default function Category() {
                 <th>Update</th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               <tr>
                 <td>1</td>
                 <td>Amit</td>
@@ -157,7 +190,25 @@ export default function Category() {
                   <EditIcon />
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
+            {
+              data.map((el, i) => (
+                <tr>
+                 <td>{i+1}</td>
+                  <td>{el.catagoryName}</td>
+                  <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                  <td>
+                    <DeleteIcon />
+                  </td>
+                  <td>
+                    <EditIcon />
+                  </td>
+
+                </tr>
+              ))
+            }
           </ResponsiveTable>
         </Grid>
       </Grid>

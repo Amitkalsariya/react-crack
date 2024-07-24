@@ -4,19 +4,21 @@ import Box from '@mui/material/Box';
 import { Field, Form, Formik } from 'formik';
 import Button from '@mui/material/Button';
 import { TextField, Typography, Grid } from '@mui/material';
-import { Try } from '@mui/icons-material';
-import axios, { Axios } from 'axios'; import { createBrowserHistory } from 'history';
+
+import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 function Login() {
-  const [data, setData] = React.useState([])
+
   const history = useHistory();
   const handleData = async (values) => {
 
     try {
       var res = await axios.post("https://interviewhub-3ro7.onrender.com/admin/login", values)
-      console.log(res);
+      var token = res.data.token
+      localStorage.setItem("token", token)
+      // console.log(res.data.token);
       history.push("/Dashboard")
     } catch (error) {
       console.log(error);

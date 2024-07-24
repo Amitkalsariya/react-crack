@@ -1,10 +1,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -16,7 +12,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
 import { Field, Form, Formik } from 'formik';
 import Header from '../Components/Header';
-import { Try } from '@mui/icons-material';
 
 const ResponsiveTable = styled('table')({
   width: '100%',
@@ -123,7 +118,7 @@ const handleD=(values)=>{
                 <th>Update</th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               <tr>
                 <td>1</td>
                 <td>Amit</td>
@@ -163,7 +158,7 @@ const handleD=(values)=>{
                   <EditIcon />
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
           </ResponsiveTable>
         </Grid>
       </Grid>
@@ -172,7 +167,3 @@ const handleD=(values)=>{
 }
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { label: 'Amit', year: 1994 },
-  { label: 'N', year: 1972 },
-];

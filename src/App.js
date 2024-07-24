@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+
 
 import React from "react";
 import Login from './Login';
-import Header from './Components/Header';
+
 import Sub from './Pages/Sub';
 import Queue from './Pages/Queue';
 import Dashboard from './Pages/Dashboard';  
@@ -11,7 +11,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+
 } from "react-router-dom";
 
 function App() {
