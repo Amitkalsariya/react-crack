@@ -40,10 +40,13 @@ const ResponsiveTable = styled('table')({
 
 export default function Category() {
   const [open, setOpen] = React.useState(false);
-
-  const [data, setData] = React.useState([])
+const [id,setId]=React.useState(null)
+const [value,setValue]=React.useState(
+  { catagoryName: '' }
+)
+  const [data, setData] = React.useState([] )
   const token = localStorage.getItem("token")
-  console.log("token ==> ", token);
+  // console.log("token ==> ", token);
   React.useEffect(()=>{
     add()
   },[])
@@ -55,31 +58,73 @@ export default function Category() {
       }
     })
       .then((res) => {
-        console.log(res.data.data);
+         console.log(res.data.data);
         setData(res.data.data)
-        add()
+      
       })
       .catch((error) => {
         console.log(error);
       })
   }
   const handleData = (values) => {
-    axios.post("https://interviewhub-3ro7.onrender.com/catagory/create", values, {
-      headers: {
-        Authorization: token
-      }
-    })
+    if(id!=null){
+      axios.patch("https://interviewhub-3ro7.onrender.com/catagory/"+id,values,{
+        headers:{
+          Authorization:token
+        }
+      })
       .then((res) => {
-        console.log("success");
-
+        // console.log("success");
+        add()
         handleClose()
+        setId(null)
       })
       .catch((error) => {
         console.log(error);
       })
+    }
+    else{
+
+      axios.post("https://interviewhub-3ro7.onrender.com/catagory/create", values, {
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          console.log("success");
+          add()
+          handleClose()
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+setValue({
+  catagoryName:''
+})
+  } 
+  const handleDelete=(id)=>{
+    axios.delete("https://interviewhub-3ro7.onrender.com/catagory/"+id, {
+      headers:{
+        Authorization:token
+      }
+    })
+    .then((res) => {
+      console.log("success"); 
+      add()
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
   }
-  
+  const handleEdit=(el,id)=>{
+    handleClickOpen()
+    setValue({
+      catagoryName:el.catagoryName
+    })
+    setId(id)
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -102,7 +147,7 @@ export default function Category() {
             />
             <React.Fragment>
               <Button variant="contained" onClick={handleClickOpen}>
-                Add category
+                Add Cetegory
               </Button>
               <Dialog
                 open={open}
@@ -111,9 +156,10 @@ export default function Category() {
               >
                 <DialogTitle>Add category</DialogTitle>
                 <DialogContent>
-                  <DialogContentText></DialogContentText>
+                
                   <Formik
-                    initialValues={{ catagoryName: '' }}
+                  
+                    initialValues={value}
                     onSubmit={handleData}>
                     <Form>
                       <Field
@@ -200,10 +246,10 @@ export default function Category() {
                   <FormControlLabel control={<Switch defaultChecked />} />
                 </td>
                   <td>
-                    <DeleteIcon />
+                    <Button onClick={()=>handleDelete(el._id)}><DeleteIcon /></Button>
                   </td>
                   <td>
-                    <EditIcon />
+                    <Button onClick={()=>handleEdit(el,el._id)}><EditIcon /></Button>
                   </td>
 
                 </tr>

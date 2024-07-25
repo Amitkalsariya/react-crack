@@ -16,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
 import { Field, Form, Formik } from 'formik';
 import Header from '../Components/Header';
+import axios from 'axios';
 const ResponsiveTable = styled('table')({
   width: '100%',
   borderCollapse: 'collapse',
@@ -36,15 +37,46 @@ const ResponsiveTable = styled('table')({
   },
 });
 
-export default function C1() {
+export default function Category() {
   const [open, setOpen] = React.useState(false);
-const handleD=(values)=>{
-  try {
-    console.log(values);
-  } catch (error) {
-    console.log(error);
+  const [data, setdata] = React.useState([])
+  const token = localStorage.getItem("token")
+  // console.log("token:-",token);
+  React.useEffect(()=>{
+sub()
+  },[])
+  function sub() {
+    axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/", {
+      headers: {
+        Authorization: token
+      }
+    })
+    .then((res) => {
+      console.log(res.data.data);
+      setdata(res.data.data)
+
+      })
+      .catch((er) => {
+        console.log(er);
+      })
   }
-}
+  sub()
+  const handleD = (values) => {
+    axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        setdata(res.data.data)
+        sub()
+        handleClose()
+      })
+      .catch((er) => {
+        console.log(er);
+      })
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -78,13 +110,13 @@ const handleD=(values)=>{
                 <DialogContent>
                   <DialogContentText></DialogContentText>
                   <Formik onSubmit={handleD}
-                  initialValues={{subcetegory:'',cetegoryname:''}}>
+                    initialValues={{ subCatagoryname: '', catagoryName: '' }}>
                     <Form>
                       <Field
                         autoFocus
                         margin="dense"
                         id="name"
-                        name="subcetegory"
+                        name="subCatagoryname"
                         label="Sub category"
                         type="text"
                         fullWidth
@@ -95,7 +127,7 @@ const handleD=(values)=>{
                         autoFocus
                         margin="dense"
                         id="name"
-                        name="cetegoryname"
+                        name="catagoryName"
                         label="Category Name"
                         type="text"
                         fullWidth
@@ -103,14 +135,14 @@ const handleD=(values)=>{
                         as={TextField}
                       />
                       <DialogActions>
-                        <Button type="submit" variant="contained">
+                        <Button type="submit" variant="contained" onClick={sub}>
                           Submit
                         </Button>
                       </DialogActions>
                     </Form>
                   </Formik>
                 </DialogContent>
-              </Dialog>
+              </Dialog> 
             </React.Fragment>
           </Stack>
         </Grid>
@@ -119,13 +151,14 @@ const handleD=(values)=>{
             <thead>
               <tr>
                 <th>No</th>
+                <th>Sub Category Name</th>
                 <th>Category Name</th>
                 <th>Status</th>
                 <th>Delete</th>
                 <th>Update</th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               <tr>
                 <td>1</td>
                 <td>Amit</td>
@@ -165,7 +198,27 @@ const handleD=(values)=>{
                   <EditIcon />
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
+              {
+              data.map((el, i) => (
+                <tr>
+                 <td>{i+1}</td>
+                  <td>{el.subCatagoryname}</td>
+                  <td>{el.catagoryName}</td>
+                  <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                  <td>
+                   <DeleteIcon />
+                  </td>
+                  <td>
+                   <EditIcon />
+                  </td>
+
+                </tr>
+              ))
+            }
+
           </ResponsiveTable>
         </Grid>
       </Grid>
