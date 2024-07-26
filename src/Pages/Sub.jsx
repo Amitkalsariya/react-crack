@@ -17,6 +17,11 @@ import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
 import { Field, Form, Formik } from 'formik';
 import Header from '../Components/Header';
 import axios from 'axios';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 const ResponsiveTable = styled('table')({
   width: '100%',
   borderCollapse: 'collapse',
@@ -38,29 +43,52 @@ const ResponsiveTable = styled('table')({
 });
 
 export default function Category() {
+  const [age, setAge] = React.useState('');
+
+
   const [open, setOpen] = React.useState(false);
-  const [data, setdata] = React.useState([])
+  const [data, setData] = React.useState([])
+  const [data1, setData1] = React.useState([])
   const token = localStorage.getItem("token")
   // console.log("token:-",token);
-  React.useEffect(()=>{
-sub()
-  },[])
+  React.useEffect(() => {
+    sub()
+  }, [])
+  React.useEffect(() => {
+    add()
+  }, [])
+  function add() {
+    axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
+      headers:
+      {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        setData1(res.data.data)
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   function sub() {
     axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/", {
       headers: {
         Authorization: token
       }
     })
-    .then((res) => {
-      console.log(res.data.data);
-      setdata(res.data.data)
+      .then((res) => {
+        console.log(res.data.data);
+        setData(res.data.data)
 
       })
       .catch((er) => {
         console.log(er);
       })
   }
-  sub()
+
   const handleD = (values) => {
     axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
       headers: {
@@ -68,10 +96,22 @@ sub()
       }
     })
       .then((res) => {
-        console.log(res.data.data);
-        setdata(res.data.data)
         sub()
         handleClose()
+      })
+      .catch((er) => {
+        console.log(er);
+      })
+  }
+  const handleDelete = (id) => {
+    axios.delete("https://interviewhub-3ro7.onrender.com/subcatagory/" + id, {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log("Success");
+        sub()
       })
       .catch((er) => {
         console.log(er);
@@ -84,6 +124,8 @@ sub()
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(data);
 
   return (
     <Header>
@@ -123,17 +165,24 @@ sub()
                         variant="outlined"
                         as={TextField}
                       />
-                      <Field
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        name="catagoryName"
-                        label="Category Name"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        as={TextField}
-                      />
+                      <br />
+                      <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Age"
+                            name='catagoryID'
+                          >
+                            { 
+                              data1.map((el,i)=>(
+                                
+                                <MenuItem value={el._id}>{el.catagoryName}</MenuItem>
+                              ))} 
+                          </Select>
+                        </FormControl>
+                      </Box>
                       <DialogActions>
                         <Button type="submit" variant="contained" onClick={sub}>
                           Submit
@@ -142,7 +191,7 @@ sub()
                     </Form>
                   </Formik>
                 </DialogContent>
-              </Dialog> 
+              </Dialog>
             </React.Fragment>
           </Stack>
         </Grid>
@@ -153,6 +202,7 @@ sub()
                 <th>No</th>
                 <th>Sub Category Name</th>
                 <th>Category Name</th>
+
                 <th>Status</th>
                 <th>Delete</th>
                 <th>Update</th>
@@ -199,20 +249,20 @@ sub()
                 </td>
               </tr>
             </tbody> */}
-              {
+            {
               data.map((el, i) => (
                 <tr>
-                 <td>{i+1}</td>
+                  <td>{i + 1}</td>
                   <td>{el.subCatagoryname}</td>
-                  <td>{el.catagoryName}</td>
+               <td>{el.catagoryName}</td>
                   <td>
-                  <FormControlLabel control={<Switch defaultChecked />} />
-                </td>
-                  <td>
-                   <DeleteIcon />
+                    <FormControlLabel control={<Switch defaultChecked />} />
                   </td>
                   <td>
-                   <EditIcon />
+                    <button onClick={() => handleDelete(el._id)}> <DeleteIcon /></button>
+                  </td>
+                  <td>
+                    <EditIcon />
                   </td>
 
                 </tr>
