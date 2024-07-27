@@ -141,17 +141,18 @@ setValue({
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={top100Films}
-              sx={{ width: 864 }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
+              options={data}
+              getOptionLabel={(option)=>option.catagoryName}
+              sx={{ width: {xs:"100%", sm:"100%"} }}
+              renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen}>
+              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}}>
                 Add Cetegory
               </Button>
               <Dialog
                 open={open}
-                onClose={handleClose}
+                  onClose={handleClose}
 
               >
                 <DialogTitle>Add category</DialogTitle>

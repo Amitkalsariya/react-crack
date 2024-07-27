@@ -45,12 +45,15 @@ const ResponsiveTable = styled('table')({
 export default function Category() {
   const [age, setAge] = React.useState('');
 
-
+const [id,setId]=React.useState(null)
+const [value,setValue]=React.useState(
+  { subCatagoryname: '', catagoryName: '' }
+)
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([])
   const [data1, setData1] = React.useState([])
   const token = localStorage.getItem("token")
-  // console.log("token:-",token);
+  console.log("token:-",token);
   React.useEffect(() => {
     sub()
   }, [])
@@ -58,6 +61,7 @@ export default function Category() {
     add()
   }, [])
   function add() {
+    
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
       headers:
       {
@@ -90,19 +94,39 @@ export default function Category() {
   }
 
   const handleD = (values) => {
-    axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
-      headers: {
-        Authorization: token
-      }
-    })
-      .then((res) => {
+    if(id!=null){
+      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,values,{
+        headers:{
+          Authorization:token
+        }
+      })
+      .then((res)=>{
         sub()
         handleClose()
+        setId(null)
       })
-      .catch((er) => {
-        console.log(er);
+    }
+    else{
+
+      axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
+        headers: {
+          Authorization: token
+        }
       })
-  }
+        .then((res) => {
+          console.log(res);
+          sub()
+          handleClose()
+        })
+        .catch((er) => {
+          console.log(er);
+        })
+    }
+    setValue({
+      subCatagoryname:'',
+      catagoryName:''
+    })
+    }
   const handleDelete = (id) => {
     axios.delete("https://interviewhub-3ro7.onrender.com/subcatagory/" + id, {
       headers: {
@@ -116,6 +140,14 @@ export default function Category() {
       .catch((er) => {
         console.log(er);
       })
+  }
+  const handleEdit=(el,id)=>{
+    handleClickOpen()
+      setValue({
+        subCatagoryname:el.subCatagoryname,
+        catagoryName:el.catagoryName
+      })
+      setId(id)
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -132,15 +164,16 @@ export default function Category() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
-            <Autocomplete
+          <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={top100Films}
-              sx={{ width: 864 }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
+              options={data}
+              getOptionLabel={(option) => option.subCatagoryname}
+              sx={{ width: {xs:"100%", sm:"100%",md:"100%"} }}
+              renderInput={(params) => <TextField {...params} label=" Subcategory" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen}>
+              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}} >
                 Add Sub Category
               </Button>
               <Dialog
@@ -152,7 +185,7 @@ export default function Category() {
                 <DialogContent>
                   <DialogContentText></DialogContentText>
                   <Formik onSubmit={handleD}
-                    initialValues={{ subCatagoryname: '', catagoryName: '' }}>
+                    initialValues={value}>
                     <Form>
                       <Field
                         autoFocus
@@ -173,12 +206,12 @@ export default function Category() {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             label="Age"
-                            name='catagoryID'
+                            name='catagoryName'
                           >
                             { 
                               data1.map((el,i)=>(
                                 
-                                <MenuItem value={el._id}>{el.catagoryName}</MenuItem>
+                                <MenuItem value={el.catagoryName}>{el.catagoryName}</MenuItem>
                               ))} 
                           </Select>
                         </FormControl>
@@ -192,7 +225,7 @@ export default function Category() {
                   </Formik>
                 </DialogContent>
               </Dialog>
-            </React.Fragment>
+            </React.Fragment> 
           </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -202,7 +235,6 @@ export default function Category() {
                 <th>No</th>
                 <th>Sub Category Name</th>
                 <th>Category Name</th>
-
                 <th>Status</th>
                 <th>Delete</th>
                 <th>Update</th>
@@ -254,15 +286,15 @@ export default function Category() {
                 <tr>
                   <td>{i + 1}</td>
                   <td>{el.subCatagoryname}</td>
-               <td>{el.catagoryName}</td>
+               <td>{el.catagoryID.catagoryName}</td>
                   <td>
                     <FormControlLabel control={<Switch defaultChecked />} />
                   </td>
                   <td>
-                    <button onClick={() => handleDelete(el._id)}> <DeleteIcon /></button>
+                    <Button onClick={() => handleDelete(el._id)}> <DeleteIcon /></Button>
                   </td>
                   <td>
-                    <EditIcon />
+                    <Button onClick={()=>handleEdit(el,el._id)}><EditIcon /></Button>
                   </td>
 
                 </tr>
@@ -271,7 +303,7 @@ export default function Category() {
 
           </ResponsiveTable>
         </Grid>
-      </Grid>
+      </Grid> 
     </Header>
   );
 }
