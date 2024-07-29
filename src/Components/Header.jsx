@@ -50,7 +50,7 @@ export default function Header({children}) {
      
       <List style={{paddingTop:"0",marginLeft:"0"}}>
          <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
-          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2 }} />
+          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2,fontWeight:"bold  " }} />
         </ListItem>
     
         {navItems.map((item) => (

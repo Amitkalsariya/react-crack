@@ -45,15 +45,17 @@ const ResponsiveTable = styled('table')({
 export default function Category() {
   const [age, setAge] = React.useState('');
 
-const [id,setId]=React.useState(null)
-const [value,setValue]=React.useState(
-  { subCatagoryname: '', catagoryName: '' }
-)
+  const [id, setId] = React.useState(null)
+  const [value, setValue] = React.useState(
+    { subCatagoryname: '', catagoryID: '' }
+  )
+
+  const [cat, setCat] = React.useState('')
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([])
   const [data1, setData1] = React.useState([])
   const token = localStorage.getItem("token")
-  console.log("token:-",token);
+  console.log("token:-", token);
   React.useEffect(() => {
     sub()
   }, [])
@@ -61,7 +63,7 @@ const [value,setValue]=React.useState(
     add()
   }, [])
   function add() {
-    
+
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
       headers:
       {
@@ -93,7 +95,12 @@ const [value,setValue]=React.useState(
       })
   }
 
+  const datacategory = (e) => {
+    setCat(e.target.value)
+  }
+
   const handleD = (values) => {
+    console.log("Insert value ==> "+values.catagoryID);
     if(id!=null){
       axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,values,{
         headers:{
@@ -107,26 +114,25 @@ const [value,setValue]=React.useState(
       })
     }
     else{
-
-      axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
-        headers: {
-          Authorization: token
-        }
+    axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values , {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log(res);
+        sub()
+        handleClose()
       })
-        .then((res) => {
-          console.log(res);
-          sub()
-          handleClose()
-        })
-        .catch((er) => {
-          console.log(er);
-        })
+      .catch((er) => {
+        console.log(er);
+      })
     }
     setValue({
       subCatagoryname:'',
-      catagoryName:''
+      catagoryID:''
     })
-    }
+  }
   const handleDelete = (id) => {
     axios.delete("https://interviewhub-3ro7.onrender.com/subcatagory/" + id, {
       headers: {
@@ -141,13 +147,13 @@ const [value,setValue]=React.useState(
         console.log(er);
       })
   }
-  const handleEdit=(el,id)=>{
+  const handleEdit = (el, id) => {
     handleClickOpen()
-      setValue({
-        subCatagoryname:el.subCatagoryname,
-        catagoryName:el.catagoryName
-      })
-      setId(id)
+    setValue({
+      subCatagoryname:el.subCatagoryname,
+      catagoryID:el.catagoryID
+    })
+    setId(id)
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -164,16 +170,16 @@ const [value,setValue]=React.useState(
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
-          <Autocomplete
+            <Autocomplete
               disablePortal
               id="combo-box-demo"
               options={data}
               getOptionLabel={(option) => option.subCatagoryname}
-              sx={{ width: {xs:"70%", sm:"100%",md:"100%"} }}
+              sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
               renderInput={(params) => <TextField {...params} label=" Subcategory" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"30%"}}} >
+              <Button variant="contained" onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "50%", xs: "50%" } }} >
                 Add Sub Category
               </Button>
               <Dialog
@@ -184,48 +190,67 @@ const [value,setValue]=React.useState(
                 <DialogTitle>Add Sub Category</DialogTitle>
                 <DialogContent>
                   <DialogContentText></DialogContentText>
-                  <Formik onSubmit={handleD}
-                    initialValues={value}>
+                  {/* <Formik
+                    initialValues={{
+                      subCatagoryname : ''
+                    }}
+                    onSubmit={handleD}
+                  >
                     <Form>
-                      <Field
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        name="subCatagoryname"
-                        label="Sub category"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        as={TextField}
-                      />
-                      <br />
-                      <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Age"
-                            name='catagoryName'
-                          >
-                            { 
-                              data1.map((el,i)=>(
-                                
-                                <MenuItem value={el.catagoryName}>{el.catagoryName}</MenuItem>
-                              ))} 
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <DialogActions>
-                        <Button type="submit" variant="contained" onClick={sub}>
-                          Submit
-                        </Button>
-                      </DialogActions>
+                      <Field name="subCatagoryname"></Field><br />
+                      <button type='submit'>Hello</button>
                     </Form>
+                  </Formik> */}
+                  <Formik
+                    initialValues={value}
+                    onSubmit={handleD}
+                  >
+                    {({values, setFieldValue}) => (
+
+                      <Form>
+                        <Field
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          name="subCatagoryname"
+                          label="Sub category"
+                          type="text"
+                          fullWidth
+                          variant="outlined"
+                          as={TextField}
+                          sx={{mb:2}}
+                        />
+                        <br />
+                        <Box sx={{ minWidth: 120 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Catagory</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              label="catagoryID"
+                              name='catagoryID'
+                              value={values.catagoryID}
+                              onChange={(e) => setFieldValue('catagoryID',e.target.value)}
+                            >
+                              {
+                                data1.map((el, i) => (
+
+                                  <MenuItem value={el._id}>{el.catagoryName}</MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <DialogActions>
+                          <Button type="submit" variant="contained">
+                            Submit
+                          </Button>
+                        </DialogActions>
+                      </Form>
+                    )}
                   </Formik>
                 </DialogContent>
               </Dialog>
-            </React.Fragment> 
+            </React.Fragment>
           </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -286,7 +311,7 @@ const [value,setValue]=React.useState(
                 <tr>
                   <td>{i + 1}</td>
                   <td>{el.subCatagoryname}</td>
-               <td>{el.catagoryID.catagoryName}</td>
+                  <td>{el.catagoryID.catagoryName}</td>
                   <td>
                     <FormControlLabel control={<Switch defaultChecked />} />
                   </td>
@@ -294,7 +319,7 @@ const [value,setValue]=React.useState(
                     <Button onClick={() => handleDelete(el._id)}> <DeleteIcon /></Button>
                   </td>
                   <td>
-                    <Button onClick={()=>handleEdit(el,el._id)}><EditIcon /></Button>
+                    <Button onClick={() => handleEdit(el, el._id)}><EditIcon /></Button>
                   </td>
 
                 </tr>
@@ -303,7 +328,7 @@ const [value,setValue]=React.useState(
 
           </ResponsiveTable>
         </Grid>
-      </Grid> 
+      </Grid>
     </Header>
   );
 }

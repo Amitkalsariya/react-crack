@@ -67,6 +67,7 @@ const [value,setValue]=React.useState(
       })
   }
   const handleData = (values) => {
+    console.log("categ ===> "+values);
     if(id!=null){
       axios.patch("https://interviewhub-3ro7.onrender.com/catagory/"+id,values,{
         headers:{
@@ -147,15 +148,15 @@ setValue({
               renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"50%",sm:"50%",xs:"30%"}}}>
-                Add Cetegory
+              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}}>
+                Add Category
               </Button>
               <Dialog
                 open={open}
                   onClose={handleClose}
 
               >
-                <DialogTitle>Add category</DialogTitle>
+                <DialogTitle>Add Category</DialogTitle>
                 <DialogContent>
                 
                   <Formik
@@ -168,11 +169,12 @@ setValue({
                         margin="dense"
                         id="name"
                         name="catagoryName"
-                        label="Add category"
+                        label="Add Category"
                         type="text"
                         fullWidth
                         variant="outlined"
                         as={TextField}
+                       
                       />
                       <DialogActions>
                         <Button type="submit" variant="contained" onClick={add}>
