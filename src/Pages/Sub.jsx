@@ -169,11 +169,11 @@ const [value,setValue]=React.useState(
               id="combo-box-demo"
               options={data}
               getOptionLabel={(option) => option.subCatagoryname}
-              sx={{ width: {xs:"100%", sm:"100%",md:"100%"} }}
+              sx={{ width: {xs:"70%", sm:"100%",md:"100%"} }}
               renderInput={(params) => <TextField {...params} label=" Subcategory" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}} >
+              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"30%"}}} >
                 Add Sub Category
               </Button>
               <Dialog

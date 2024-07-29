@@ -147,7 +147,7 @@ setValue({
               renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}}>
+              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"50%",sm:"50%",xs:"30%"}}}>
                 Add Cetegory
               </Button>
               <Dialog
