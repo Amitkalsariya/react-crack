@@ -174,7 +174,7 @@ export default function Category() {
               disablePortal
               id="combo-box-demo"
               options={data}
-              getOptionLabel={(option) => option.subCatagoryname}
+              getOptionLabel={(values) => values.subCatagoryname}
               sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
               renderInput={(params) => <TextField {...params} label=" Subcategory" />}
             />
@@ -311,7 +311,7 @@ export default function Category() {
                 <tr>
                   <td>{i + 1}</td>
                   <td>{el.subCatagoryname}</td>
-                  <td>{el.catagoryID.catagoryName}</td>
+                  <td>{el.catagoryID?.catagoryName}</td>
                   <td>
                     <FormControlLabel control={<Switch defaultChecked />} />
                   </td>
@@ -334,7 +334,3 @@ export default function Category() {
 }
 
 
-const top100Films = [
-  { label: 'Amit', year: 1994 },
-  { label: 'N', year: 1972 },
-];

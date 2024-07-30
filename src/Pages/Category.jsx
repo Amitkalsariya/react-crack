@@ -143,7 +143,7 @@ setValue({
               disablePortal
               id="combo-box-demo"
               options={data}
-              getOptionLabel={(option)=>option.catagoryName}
+              getOptionLabel={(values)=>values.catagoryName}
               sx={{ width: {xs:"100%", sm:"100%"} }}
               renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
@@ -265,8 +265,3 @@ setValue({
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { label: 'Amit', year: 1994 },
-  { label: 'N', year: 1972 },
-];

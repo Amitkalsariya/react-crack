@@ -6,7 +6,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-
+import '@fontsource/roboto/700.css';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -20,6 +20,7 @@ import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
+
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
@@ -50,7 +51,7 @@ export default function Header({children}) {
      
       <List style={{paddingTop:"0",marginLeft:"0"}}>
          <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
-          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2,fontWeight:"bold  " }} />
+          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2,fontWeight:"bold" }} />
         </ListItem>
     
         {navItems.map((item) => (
@@ -96,7 +97,10 @@ export default function Header({children}) {
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
               Dashboard
             </Typography>
-            <MeetingRoomIcon/>
+            {/* <Link href="/" color="inherit">
+     
+      </Link> */}
+         <MeetingRoomIcon />
           </Toolbar>
         </AppBar>
         <Box
@@ -104,13 +108,14 @@ export default function Header({children}) {
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
           aria-label="mailbox folders"
         >
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+         
           <Drawer
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true, 
+            
             }}
             sx={{
               display: { xs: 'block', sm: 'none' },
