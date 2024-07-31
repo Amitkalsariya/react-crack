@@ -11,23 +11,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
-
 import CategoryIcon from '@mui/icons-material/Category';
-
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
-
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
-
 
 const drawerWidth = 240;
 
@@ -46,14 +40,11 @@ export default function Header({children}) {
   };
 
   const drawer = (
-    <div className=''>
-    
-     
-      <List style={{paddingTop:"0",marginLeft:"0"}}>
-         <ListItem sx={{ backgroundColor: '#1976d2', padding: 2 }}>
-          <ListItemText primary="Interview Portal"  sx={{ color: 'white', pl: 2,fontWeight:"bold" }} />
+    <div>
+      <List style={{ paddingTop : "0", marginLeft: "0" }}>
+        <ListItem sx={{ backgroundColor: '#2F3C7E', padding: 2 }}>
+          <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2, fontWeight: "bold" }} />
         </ListItem>
-    
         {navItems.map((item) => (
           <ListItem
             key={item.text}
@@ -74,17 +65,17 @@ export default function Header({children}) {
   );
 
   return (
-
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: '#2F3C7E' // Change AppBar color here
         }}
-        >
-          <Toolbar>
+      >
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -94,60 +85,55 @@ export default function Header({children}) {
           >
             <MenuIcon />
           </IconButton>
-            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Dashboard
-            </Typography>
-            {/* <Link href="/" color="inherit">
-     
-      </Link> */}
-         <MeetingRoomIcon />
-          </Toolbar>
-        </AppBar>
-        <Box
-          component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          aria-label="mailbox folders"
-        >
-         
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, 
-            
-            }}
-            sx={{
-              display: { xs: 'block', sm: 'none' },
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
-          >
-            {drawer}
-          </Drawer>
-          <Drawer
-            variant="permanent"
-            open
-            sx={{
-              display: { xs: 'none', sm: 'block' },
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Box>
-        <Box
-          component="main"
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            Dashboard
+          </Typography>
+          <Link to="/">  <MeetingRoomIcon sx={{color:"white"}} /></Link>
+        
+        </Toolbar>
+      </AppBar>
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
           sx={{
-            flexGrow: 1,
-            bgcolor: 'background.default',
-            p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
-          <Toolbar />
-         {children}
-        </Box>
+          {drawer}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          open
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
       </Box>
-     
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: 'background.default',
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+        }}
+      >
+        <Toolbar />
+        {children}
+      </Box>
+    </Box>
   );
 }

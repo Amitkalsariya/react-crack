@@ -36,13 +36,20 @@ const ResponsiveTable = styled('table')({
     },
   },
   '& th': {
-    backgroundColor: 'rgb(25,118,210)',
+    backgroundColor: '#2F3C7E',
     color: 'white',
     fontWeight: 'normal',
   },
 });
 
 export default function Category() {
+  const CustomButton = styled(Button)({
+    backgroundColor: '#2F3C7E',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#2F3C7E',
+    },
+  });
   const [age, setAge] = React.useState('');
 
   const [id, setId] = React.useState(null)
@@ -153,8 +160,8 @@ export default function Category() {
       subCatagoryname:el.subCatagoryname,
       catagoryID:el.catagoryID
     })
-    setId(id)
-  }
+      setId(id)
+    }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -179,9 +186,9 @@ export default function Category() {
               renderInput={(params) => <TextField {...params} label=" Subcategory" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "50%", xs: "50%" } }} >
+              <CustomButton  onClick={handleClickOpen} >
                 Add Sub Category
-              </Button>
+              </CustomButton>
               <Dialog
                 open={open}
                 onClose={handleClose}

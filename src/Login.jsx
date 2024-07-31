@@ -31,9 +31,9 @@ function Login() {
     <React.Fragment>
       <CssBaseline />
       <Box sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={{ width: '90%', maxWidth: '400px', backgroundColor: 'white', padding: '50px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', border: '5px solid rgb(25, 118, 210)' }}>
-          <Typography variant="h4" align="center" gutterBottom sx={{ color: 'rgb(25, 118, 210)' ,fontWeight:"bold"}}>
-            Admin Panel
+        <Box sx={{ width: '90%', maxWidth: '400px', backgroundColor: 'white', padding: '50px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', border: '5px solid #2F3C7E' }}>
+          <Typography variant="h4" align="center" gutterBottom sx={{ color: 'rgb(25, 118, 210)' ,fontWeight:"bold", color: '#2F3C7E',}}>
+            Admin Portal
           </Typography>
           <Formik
             initialValues={{ email: '', password: '' }}
@@ -79,7 +79,7 @@ function Login() {
                     type="submit"
                     variant="contained"
                     fullWidth
-                    style={{ backgroundColor: '#1976d2', color: 'white', fontWeight: '500' }}
+                    style={{  backgroundColor: '#2F3C7E', color: 'white', fontWeight: '500' }}
                   >
                     Submit
                   </Button>

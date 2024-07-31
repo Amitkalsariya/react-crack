@@ -18,23 +18,37 @@ import { Field, Form, Formik } from 'formik';
 import Header from '../Components/Header';
 import axios from 'axios';
 
+
 const ResponsiveTable = styled('table')({
   width: '100%',
   borderCollapse: 'collapse',
   overflowX: 'auto',
+
+
   '& th, td': {
     padding: '15px',
     borderBottom: '1px solid #ccc',
     textAlign: 'center',
     '@media (max-width: 768px)': {
+      
       fontSize: '14px',
       padding: '10px',
+ 
+     
     },
   },
   '& th': {
-    backgroundColor: 'rgb(25,118,210)',
+    backgroundColor: '#2F3C7E',
     color: 'white',
     fontWeight: 'normal',
+  }
+  
+});
+const CustomButton = styled(Button)({
+  backgroundColor: '#2F3C7E',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#2F3C7E',
   },
 });
 
@@ -148,9 +162,9 @@ setValue({
               renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
             <React.Fragment>
-              <Button variant="contained" onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}}>
+              <CustomButton  onClick={handleClickOpen} sx={{width:{md:"20%",sm:"50%",xs:"50%"}}}>
                 Add Category
-              </Button>
+              </CustomButton>
               <Dialog
                 open={open}
                   onClose={handleClose}
@@ -189,10 +203,12 @@ setValue({
           </Stack>
         </Grid>
         <Grid item xs={12}>
+         
+         
           <ResponsiveTable>
-            <thead>
+            <thead >
               <tr>
-                <th>No</th>
+                <th >No</th>
                 <th>Category Name</th>
                 <th>Status</th>
                 <th>Delete</th>
