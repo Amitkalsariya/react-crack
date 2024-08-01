@@ -51,6 +51,12 @@ const CustomButton = styled(Button)({
     backgroundColor: '#2F3C7E',
   },
 });
+const CustomButton1 = styled(Button)({
+  color: '#2F3C7E',
+  '&:hover': {
+   color: '#2F3C7E',
+  },
+});
 
 export default function Category() {
   const [open, setOpen] = React.useState(false);
@@ -158,7 +164,7 @@ setValue({
               id="combo-box-demo"
               options={data}
               getOptionLabel={(values)=>values.catagoryName}
-              sx={{ width: {xs:"100%", sm:"100%"} }}
+              sx={{ width: {xs:"100%", sm:"100%" ,md:"100%"} }}
               renderInput={(params) => <TextField {...params} label="Search Category" />}
             />
             <React.Fragment>
@@ -191,9 +197,9 @@ setValue({
                        
                       />
                       <DialogActions>
-                        <Button type="submit" variant="contained" onClick={add}>
+                        <CustomButton type="submit" variant="contained" onClick={add}>
                           Submit
-                        </Button>
+                        </CustomButton>
                       </DialogActions>
                     </Form>
                   </Formik>
@@ -265,10 +271,10 @@ setValue({
                   <FormControlLabel control={<Switch defaultChecked />} />
                 </td>
                   <td>
-                    <Button onClick={()=>handleDelete(el._id)}><DeleteIcon /></Button>
+                    <CustomButton1 onClick={()=>handleDelete(el._id)}><DeleteIcon /></CustomButton1>
                   </td>
                   <td>
-                    <Button onClick={()=>handleEdit(el,el._id)}><EditIcon /></Button>
+                    <CustomButton1 onClick={()=>handleEdit(el,el._id)}><EditIcon /></CustomButton1>
                   </td>
 
                 </tr>

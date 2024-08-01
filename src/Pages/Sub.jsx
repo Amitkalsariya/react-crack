@@ -50,6 +50,14 @@ export default function Category() {
       backgroundColor: '#2F3C7E',
     },
   });
+  
+  const CustomButton1 = styled(Button)({
+    color: '#2F3C7E',
+
+    '&:hover': {
+      color: '#2F3C7E',
+    },
+  });
   const [age, setAge] = React.useState('');
 
   const [id, setId] = React.useState(null)
@@ -119,6 +127,9 @@ export default function Category() {
         handleClose()
         setId(null)
       })
+      .catch((er) => {
+        console.log(er);
+      })
     }
     else{
     axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values , {
@@ -183,10 +194,10 @@ export default function Category() {
               options={data}
               getOptionLabel={(values) => values.subCatagoryname}
               sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
-              renderInput={(params) => <TextField {...params} label=" Subcategory" />}
+              renderInput={(params) => <TextField {...params} label=" Sub - Category" />}
             />
             <React.Fragment>
-              <CustomButton  onClick={handleClickOpen} >
+              <CustomButton  onClick={handleClickOpen} sx={{width:{md:"20%",sm:"40%",xs:"50%"}}} >
                 Add Sub Category
               </CustomButton>
               <Dialog
@@ -248,9 +259,9 @@ export default function Category() {
                           </FormControl>
                         </Box>
                         <DialogActions>
-                          <Button type="submit" variant="contained">
+                          <CustomButton1 type="submit" variant="contained">
                             Submit
-                          </Button>
+                          </CustomButton1>
                         </DialogActions>
                       </Form>
                     )}
@@ -323,10 +334,10 @@ export default function Category() {
                     <FormControlLabel control={<Switch defaultChecked />} />
                   </td>
                   <td>
-                    <Button onClick={() => handleDelete(el._id)}> <DeleteIcon /></Button>
+                    <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>
                   </td>
                   <td>
-                    <Button onClick={() => handleEdit(el, el._id)}><EditIcon /></Button>
+                    <CustomButton1 onClick={() => handleEdit(el, el._id)}><EditIcon /></CustomButton1>
                   </td>
 
                 </tr>
