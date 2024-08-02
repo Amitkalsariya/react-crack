@@ -54,17 +54,19 @@ const ResponsiveTable = styled('table')({
     fontWeight: 'normal',
   },
 });
-const token= localStorage.getItem("token")
 export default function Queue() {
   const [open, setOpen] = React.useState(false);
   const [data,setData]=React.useState([])
   const [data1,setData1]=React.useState([])
   const [data2,setData2]=React.useState([])
   const [id, setId] = React.useState(null)
+
+  const token= localStorage.getItem("token")
+
   const [value, setValue] = React.useState(
-    { subCatagoryname: '', catagoryID: '' }
+    { questions: '', answer: '',subcatagoryID:'' }
   )
-  console.log(token);
+  console.log(token); 
   React.useEffect(()=>{
     qa()
   },[])
@@ -107,7 +109,7 @@ export default function Queue() {
       })
   }
   function qa() {
-    axios.get("https://interviewhub-3ro7.onrender.com/questions/create",{
+    axios.get("https://interviewhub-3ro7.onrender.com/questions",{
       headers:{
         Authorization:token
       }
@@ -115,6 +117,7 @@ export default function Queue() {
     .then((res)=>{
       console.log(res.data.data);
       setData(res.data.data)
+      localStorage.setItem("count3",res.data.data.length)
     })
     .catch((er)=>{
       console.log(er);
@@ -127,7 +130,8 @@ export default function Queue() {
         headers:{
           Authorization:token
         }
-      })  .then((res)=>{
+      })  
+      .then((res)=>{
         qa()
         handleClose()
         setId(null)
@@ -138,7 +142,7 @@ export default function Queue() {
     }
     else{
 
-      axios.post("https://interviewhub-3ro7.onrender.com/questions/",values,{
+      axios.post("https://interviewhub-3ro7.onrender.com/questions/create",values,{
         headers:{
           Authorization:token
         }
@@ -155,7 +159,7 @@ export default function Queue() {
   };
 
   const handleDelete = (id) => {
-    axios.delete("https://interviewhub-3ro7.onrender.com/questions" + id, {
+    axios.delete("https://interviewhub-3ro7.onrender.com/questions/" + id, {
       headers: {
         Authorization: token
       }
@@ -163,7 +167,7 @@ export default function Queue() {
       .then((res) => {
         console.log("Success");
         qa()
-      })
+      })  
       .catch((er) => {
         console.log(er);
       })
@@ -199,8 +203,9 @@ export default function Queue() {
               <DialogContent>
                 <DialogContentText></DialogContentText>
                 <Formik
+                enableReinitialize
                   onSubmit={handleD}
-                  initialValues={{ questions: '', answer: '',subcatagoryID:'' }}
+                  initialValues={value}
                 >
                   {({values,setFieldValue})=>(
                   <Form>
@@ -279,8 +284,9 @@ export default function Queue() {
                 <tr>
                   <td>{i + 1}</td>
                   <td>{el.questions}</td>
-                  <td>{el.subcatagoryID.subCatagoryname}</td>
-                <td>{el.catagoryID.catagoryName}</td>
+                  <td>{el.answer}</td>
+                  <td>{el.subcatagoryID?.subCatagoryname}</td>
+                <td>{el.subcatagoryID?.catagoryID?.catagoryName}</td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>
                   </td>

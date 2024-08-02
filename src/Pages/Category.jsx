@@ -80,6 +80,7 @@ const [value,setValue]=React.useState(
       .then((res) => {
          console.log(res.data.data);
         setData(res.data.data)
+        localStorage.setItem("count1",res.data.data.length)
       
       })
       .catch((error) => {

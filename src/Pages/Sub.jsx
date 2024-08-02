@@ -103,6 +103,7 @@ export default function Category() {
       .then((res) => {
         console.log(res.data.data);
         setData(res.data.data)
+        localStorage.setItem("count2",res.data.data.length)
 
       })
       .catch((er) => {
