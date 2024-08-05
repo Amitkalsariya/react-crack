@@ -103,9 +103,7 @@ export default function Category() {
       }
     })
       .then((res) => {
-        var a=res.data.data.filter((el)=>{
-
-        })
+        
         setData(res.data.data)
         localStorage.setItem("count2",res.data.data.length)
 
@@ -264,9 +262,9 @@ export default function Category() {
                           </FormControl>
                         </Box>
                         <DialogActions>
-                          <CustomButton1 type="submit" variant="contained">
+                          <CustomButton type="submit" variant="contained">
                             Submit
-                          </CustomButton1>
+                          </CustomButton>
                         </DialogActions>
                       </Form>
                     )}
