@@ -53,9 +53,11 @@ export default function Category() {
   
   const CustomButton1 = styled(Button)({
     color: '#2F3C7E',
-
+   
     '&:hover': {
       color: '#2F3C7E',
+    
+
     },
   });
   const [age, setAge] = React.useState('');
@@ -101,7 +103,9 @@ export default function Category() {
       }
     })
       .then((res) => {
-        console.log(res.data.data);
+        var a=res.data.data.filter((el)=>{
+
+        })
         setData(res.data.data)
         localStorage.setItem("count2",res.data.data.length)
 
