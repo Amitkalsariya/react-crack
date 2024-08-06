@@ -71,6 +71,7 @@ export default function Category() {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([])
   const [data1, setData1] = React.useState([])
+  const [searchvalue,setSearchvalue]=React.useState('')
   const token = localStorage.getItem("token")
   console.log("token:-", token);
   React.useEffect(() => {
@@ -184,10 +185,13 @@ export default function Category() {
     setOpen(false);
   };
 
-  console.log(data);
+  // console.log(data);
+  const filteredData1 = data.filter((el) =>
+    el.subCatagoryname.toLowerCase().includes(searchvalue.toLowerCase())
+  );
 
   return (
-    <Header>
+    <Header>  
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
@@ -197,7 +201,10 @@ export default function Category() {
               options={data}
               getOptionLabel={(values) => values.subCatagoryname}
               sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
-              renderInput={(params) => <TextField {...params} label=" Sub - Category" />}
+              renderInput={(params) => <TextField {...params} label=" Sub - Category" 
+              onInputChange={(event, el) => {
+                setSearchvalue(el);
+              }}/>}
             />
             <React.Fragment>
               <CustomButton  onClick={handleClickOpen} sx={{width:{md:"20%",sm:"40%",xs:"50%"}}} >
@@ -328,7 +335,7 @@ export default function Category() {
               </tr>
             </tbody> */}
             {
-              data.map((el, i) => (
+              filteredData1.map((el, i) => (
                 <tr>
                   <td>{i + 1}</td>
                   <td>{el.subCatagoryname}</td>
@@ -346,7 +353,7 @@ export default function Category() {
                 </tr>
               ))
             }
-
+ 
           </ResponsiveTable>
         </Grid>
       </Grid>
