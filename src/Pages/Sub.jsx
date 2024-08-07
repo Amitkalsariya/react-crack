@@ -32,7 +32,7 @@ const ResponsiveTable = styled('table')({
     textAlign: 'center',
     '@media (max-width: 768px)': {
       fontSize: '14px',
-      padding: '10px',
+      padding: '6px',
     },
   },
   '& th': {
@@ -263,7 +263,9 @@ export default function Category() {
                               {
                                 data1.map((el, i) => (
 
-                                  <MenuItem value={el._id}>{el.catagoryName}</MenuItem>
+                                  <MenuItem value=
+                                  
+                                  {el._id}>{el.catagoryName}</MenuItem>
                                 ))}
                             </Select>
                           </FormControl>
