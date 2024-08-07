@@ -32,7 +32,7 @@ const ResponsiveTable = styled('table')({
     textAlign: 'center',
     '@media (max-width: 768px)': {
       fontSize: '14px',
-      padding: '6px',
+      padding: '10px',
     },
   },
   '& th': {
@@ -50,13 +50,13 @@ export default function Category() {
       backgroundColor: '#2F3C7E',
     },
   });
-  
+
   const CustomButton1 = styled(Button)({
     color: '#2F3C7E',
-   
+
     '&:hover': {
       color: '#2F3C7E',
-    
+
 
     },
   });
@@ -71,14 +71,14 @@ export default function Category() {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([])
   const [data1, setData1] = React.useState([])
-  const [searchvalue,setSearchvalue]=React.useState('')
+  const [searchvalue, setSearchvalue] = React.useState('')
   const token = localStorage.getItem("token")
   console.log("token:-", token);
   React.useEffect(() => {
     sub()
     add()
   }, [])
-  
+
   function add() {
 
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
@@ -103,9 +103,9 @@ export default function Category() {
       }
     })
       .then((res) => {
-        
+
         setData(res.data.data)
-        localStorage.setItem("count2",res.data.data.length)
+        localStorage.setItem("count2", res.data.data.length)
 
       })
       .catch((er) => {
@@ -115,43 +115,43 @@ export default function Category() {
 
   const datacategory = (e) => {
     setCat(e.target.value)
-  } 
+  }
 
   const handleD = (values) => {
     // console.log("Insert value ==> "+values.catagoryID);
-    if(id!=null){
-      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,values,{
-        headers:{
-          Authorization:token
+    if (id != null) {
+      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/" + id, values, {
+        headers: {
+          Authorization: token
         }
       })
-      .then((res)=>{
-        sub()
-        handleClose()
-        setId(null)
-      })
-      .catch((er) => {
-        console.log(er);
-      })
+        .then((res) => {
+          sub()
+          handleClose()
+          setId(null)
+        })
+        .catch((er) => {
+          console.log(er);
+        })
     }
-    else{
-    axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values , {
-      headers: {
-        Authorization: token
-      }
-    })
-      .then((res) => {
-        console.log(res);
-        sub()
-        handleClose()
+    else {
+      axios.post("https://interviewhub-3ro7.onrender.com/subcatagory/create", values, {
+        headers: {
+          Authorization: token
+        }
       })
-      .catch((er) => {
-        console.log(er);
-      })
+        .then((res) => {
+          console.log(res);
+          sub()
+          handleClose()
+        })
+        .catch((er) => {
+          console.log(er);
+        })
     }
     setValue({
-      subCatagoryname:'',
-      catagoryID:''
+      subCatagoryname: '',
+      catagoryID: ''
     })
   }
   const handleDelete = (id) => {
@@ -171,11 +171,11 @@ export default function Category() {
   const handleEdit = (el, id) => {
     handleClickOpen()
     setValue({
-      subCatagoryname:el.subCatagoryname,
-      catagoryID:el.catagoryID
+      subCatagoryname: el.subCatagoryname,
+      catagoryID: el.catagoryID
     })
-      setId(id)
-    }
+    setId(id)
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -190,7 +190,7 @@ export default function Category() {
   );
 
   return (
-    <Header>  
+    <Header>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
@@ -200,14 +200,14 @@ export default function Category() {
               options={data}
               getOptionLabel={(values) => values.subCatagoryname}
               sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
-              renderInput={(params) => <TextField {...params} label=" Sub - Category" 
-            />}
-            onInputChange={(event, el) => {
-              setSearchvalue(el);
-            }}
+              renderInput={(params) => <TextField {...params} label=" Sub - Category"
+              />}
+              onInputChange={(event, el) => {
+                setSearchvalue(el);
+              }}
             />
             <React.Fragment>
-              <CustomButton  onClick={handleClickOpen} sx={{width:{md:"20%",sm:"40%",xs:"50%"}}} >
+              <CustomButton onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "40%", xs: "50%" } }} >
                 Add Sub Category
               </CustomButton>
               <Dialog
@@ -233,7 +233,7 @@ export default function Category() {
                     initialValues={value}
                     onSubmit={handleD}
                   >
-                    {({values, setFieldValue}) => (
+                    {({ values, setFieldValue }) => (
 
                       <Form>
                         <Field
@@ -246,7 +246,7 @@ export default function Category() {
                           fullWidth
                           variant="outlined"
                           as={TextField}
-                          sx={{mb:2}}
+                          sx={{ mb: 2 }}
                         />
                         <br />
                         <Box sx={{ minWidth: 120 }}>
@@ -258,14 +258,14 @@ export default function Category() {
                               label="catagoryID"
                               name='catagoryID'
                               value={values.catagoryID}
-                              onChange={(e) => setFieldValue('catagoryID',e.target.value)}
+                              onChange={(e) => setFieldValue('catagoryID', e.target.value)}
                             >
                               {
                                 data1.map((el, i) => (
 
                                   <MenuItem value=
-                                  
-                                  {el._id}>{el.catagoryName}</MenuItem>
+
+                                    {el._id}>{el.catagoryName}</MenuItem>
                                 ))}
                             </Select>
                           </FormControl>
@@ -355,7 +355,7 @@ export default function Category() {
                 </tr>
               ))
             }
- 
+
           </ResponsiveTable>
         </Grid>
       </Grid>

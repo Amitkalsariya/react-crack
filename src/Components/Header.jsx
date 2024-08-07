@@ -26,10 +26,10 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 const drawerWidth = 240;
 
 const navItems = [
-  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/Dashboard' },
-  { text: 'Category', icon: <CategoryIcon />, path: '/Category' },
-  { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/Sub' },
-  { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/Queue' },
+  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/dashboard' },
+  { text: 'Category', icon: <CategoryIcon />, path: '/category' },
+  { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/sub' },
+  { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/queue' },
 ];
 
 export default function Header({children}) {
@@ -44,6 +44,7 @@ export default function Header({children}) {
       <List style={{ paddingTop : "0", marginLeft: "0" }}>
         <ListItem sx={{ backgroundColor: '#2F3C7E', padding: 2 }}>
           <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2, fontWeight: "bold" }} />
+          
         </ListItem>
         {navItems.map((item) => (
           <ListItem

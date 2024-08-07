@@ -26,7 +26,9 @@ function App() {
             <Route path="/Sub" component={Sub} />
             <Route path="/Queue" component={Queue} />
           </Switch>
-       </Router>
+          
+       </Router>  
+       
     </div>
   );
 }

@@ -28,7 +28,7 @@ const ResponsiveTable = styled('table')({
     textAlign: 'center',
     '@media (max-width: 768px)': {
       fontSize: '14px',
-      padding: '6px',
+      padding: '10px',
     },
   },
   '& th': {
