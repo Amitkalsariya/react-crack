@@ -76,10 +76,9 @@ export default function Category() {
   console.log("token:-", token);
   React.useEffect(() => {
     sub()
-  }, [])
-  React.useEffect(() => {
     add()
   }, [])
+  
   function add() {
 
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
@@ -116,10 +115,10 @@ export default function Category() {
 
   const datacategory = (e) => {
     setCat(e.target.value)
-  }
+  } 
 
   const handleD = (values) => {
-    console.log("Insert value ==> "+values.catagoryID);
+    // console.log("Insert value ==> "+values.catagoryID);
     if(id!=null){
       axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,values,{
         headers:{
@@ -202,9 +201,10 @@ export default function Category() {
               getOptionLabel={(values) => values.subCatagoryname}
               sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
               renderInput={(params) => <TextField {...params} label=" Sub - Category" 
-              onInputChange={(event, el) => {
-                setSearchvalue(el);
-              }}/>}
+            />}
+            onInputChange={(event, el) => {
+              setSearchvalue(el);
+            }}
             />
             <React.Fragment>
               <CustomButton  onClick={handleClickOpen} sx={{width:{md:"20%",sm:"40%",xs:"50%"}}} >
