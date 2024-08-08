@@ -165,6 +165,7 @@ export default function Category() {
               }}
             />
             <React.Fragment>  
+              
               <CustomButton onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "50%", xs: "50%" } }}>
                 Add Category
               </CustomButton>

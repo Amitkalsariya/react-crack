@@ -22,19 +22,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const drawerWidth = 240;
 
 const navItems = [
-  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/dashboard' },
-  { text: 'Category', icon: <CategoryIcon />, path: '/category' },
-  { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/sub' },
-  { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/queue' },
+  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/Dashboard' },
+  { text: 'Category', icon: <CategoryIcon />, path: '/Category' },
+  { text: 'Sub Category', icon: <ControlPointDuplicateIcon />, path: '/Sub' },
+  { text: 'Q & A', icon: <HelpOutlineIcon />, path: '/Queue' },
 ];
 
 export default function Header({children}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const location = useLocation()
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -44,7 +45,7 @@ export default function Header({children}) {
       <List style={{ paddingTop : "0", marginLeft: "0" }}>
         <ListItem sx={{ backgroundColor: '#2F3C7E', padding: 2 }}>
           <ListItemText primary="Interview Portal" sx={{ color: 'white', pl: 2, fontWeight: "bold" }} />
-          
+   
         </ListItem>
         {navItems.map((item) => (
           <ListItem
@@ -87,7 +88,7 @@ export default function Header({children}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
+            Dashboard     {location.pathname}
           </Typography>
           <Link to="/">  <MeetingRoomIcon sx={{color:"white"}} /></Link>
         
