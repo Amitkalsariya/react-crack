@@ -176,6 +176,25 @@ export default function Category() {
     })
     setId(id)
   }
+  const handlestatus=(e,el,id)=>{
+    console.log("Success "+e.target.checked);
+    
+    axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,{
+      'status':e.target.checked?'on':'off'
+    },{
+      headers:{
+        Authorization:token
+      }
+    })
+    .then((res) => {
+      console.log(res.data.data);
+      sub()
+      filteredData1(el)
+    })
+    .catch((er) => {
+      console.log(er);
+    })
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -343,7 +362,7 @@ export default function Category() {
                   <td>{el.subCatagoryname}</td>
                   <td>{el.catagoryID?.catagoryName}</td>
                   <td>
-                    <FormControlLabel control={<Switch defaultChecked />} />
+                    <FormControlLabel control={<Switch defaultChecked checked={el.status==='on'} onChange={(e)=>handlestatus(e,el,el._id)} />} />
                   </td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>

@@ -136,6 +136,26 @@ export default function Category() {
     setId(id);
   };
 
+  const handlestatus = (e, el, id) => {
+    console.log("Success "+e.target.checked);
+    
+    axios.patch("https://interviewhub-3ro7.onrender.com/catagory/" + id, {
+      'status': e.target.checked ? 'on' : 'off'
+    }
+      , {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        add()
+        filteredData(el)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -164,8 +184,8 @@ export default function Category() {
                 setSearchvalue(el);
               }}
             />
-            <React.Fragment>  
-              
+            <React.Fragment>
+
               <CustomButton onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "50%", xs: "50%" } }}>
                 Add Category
               </CustomButton>
@@ -220,7 +240,7 @@ export default function Category() {
                   <td>{i + 1}</td>
                   <td>{el.catagoryName}</td>
                   <td>
-                    <FormControlLabel control={<Switch defaultChecked />} />
+                    <FormControlLabel control={<Switch defaultChecked checked={el.status === 'on'} onChange={(e) => { handlestatus(e,el, el._id) }} />} />
                   </td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}>
