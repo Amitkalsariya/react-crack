@@ -136,6 +136,39 @@ export default function Category() {
     setId(id);
   };
 
+  const subcatstatus=(filterData)=>{
+    // console.log(filteredData);
+    
+    for (let i = 0; i < filterData.length; i++) {
+      const id = filterData[i]._id;
+      
+      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,{
+        'status':filterData[i].status=='on'?'off':'on',
+        headers:{
+          Authorization:token
+        }
+      })
+      .then((res)=>{
+          console.log(res);
+          
+      })
+      .catch((er)=>{
+        console.log(er);
+        
+      })
+    }
+  }
+  const getSubfilter=(el)=>{
+      axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/",{
+        headers:{
+          Authorization:token
+        }
+      })
+      .then((res)=>{
+        const filterData=res.data.data.filter((items)=>items.catagoryID._id===el._id)
+        subcatstatus(filterData)
+      })
+  }
   const handlestatus = (e, el, id) => {
     console.log("Success "+e.target.checked);
     
@@ -150,7 +183,7 @@ export default function Category() {
       .then((res) => {
         console.log(res.data.data);
         add()
-        filteredData(el)
+        getSubfilter(el)
       })
       .catch((error) => {
         console.log(error);
