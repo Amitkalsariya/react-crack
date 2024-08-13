@@ -79,6 +79,14 @@ export default function Category() {
     add()
   }, [])
 
+  const Blueswitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: '#2F3C7E',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#102C57',
+    },
+  }));
   function add() {
 
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
@@ -195,6 +203,7 @@ export default function Category() {
           console.log(er);
         })
     }
+    
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -209,6 +218,7 @@ export default function Category() {
     el.subCatagoryname.toLowerCase().includes(searchvalue.toLowerCase())
   );
 
+ 
   return (
     <Header>
       <Grid container spacing={2}>
@@ -363,7 +373,7 @@ export default function Category() {
                   <td>{el.subCatagoryname}</td>
                   <td>{el.catagoryID?.catagoryName}</td>
                   <td>
-                    <FormControlLabel control={<Switch  checked={el.status === 'on'} onChange={(e) => handlestatus(e, el, el._id)} />} />
+                    <FormControlLabel control={<Blueswitch  checked={el.status === 'on'} onChange={(e) => handlestatus(e, el, el._id)} />} />
                   </td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>

@@ -64,6 +64,14 @@ export default function Category() {
   React.useEffect(() => {
     add();
   }, []);
+  const Blueswitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: '#2F3C7E',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#102C57',
+    },
+  }));
 
   function add() {
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
@@ -136,42 +144,47 @@ export default function Category() {
     setId(id);
   };
 
-  const subcatstatus=(filterData)=>{
+  const subcatstatus = (filterData) => {
     // console.log(filteredData);
-    
+
     for (let i = 0; i < filterData.length; i++) {
       const id = filterData[i]._id;
-      
-      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/"+id,{
-        'status':filterData[i].status=='on'?'off':'on',
-        headers:{
-          Authorization:token
+
+      axios.patch("https://interviewhub-3ro7.onrender.com/subcatagory/" + id, {
+        'status': filterData[i].status === 'on' ? 'off' : 'on'
+      }, {
+        headers: {
+          Authorization: token
         }
       })
-      .then((res)=>{
+        .then((res) => {
           console.log(res);
-          
+
+        })
+        .catch((er) => {
+          console.log(er);
+
+        })
+    }
+  }
+  const getSubfilter = (el) => {
+    axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/", {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        const filterData = res.data.data.filter((items) => items.catagoryID._id === el._id)
+        subcatstatus(filterData)
       })
       .catch((er)=>{
         console.log(er);
         
       })
-    }
-  }
-  const getSubfilter=(el)=>{
-      axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/",{
-        headers:{
-          Authorization:token
-        }
-      })
-      .then((res)=>{
-        const filterData=res.data.data.filter((items)=>items.catagoryID._id===el._id)
-        subcatstatus(filterData)
-      })
   }
   const handlestatus = (e, el, id) => {
-    console.log("Success "+e.target.checked);
-    
+    console.log("Success " + e.target.checked);
+
     axios.patch("https://interviewhub-3ro7.onrender.com/catagory/" + id, {
       'status': e.target.checked ? 'on' : 'off'
     }
@@ -273,7 +286,7 @@ export default function Category() {
                   <td>{i + 1}</td>
                   <td>{el.catagoryName}</td>
                   <td>
-                    <FormControlLabel control={<Switch defaultChecked checked={el.status === 'on'} onChange={(e) => { handlestatus(e,el, el._id) }} />} />
+                    <FormControlLabel control={<Blueswitch defaultChecked checked={el.status === 'on'} onChange={(e) => { handlestatus(e, el, el._id) }} />} />
                   </td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}>

@@ -60,6 +60,7 @@ export default function Queue() {
   const [data1,setData1]=React.useState([])
   const [data2,setData2]=React.useState([])
   const [id, setId] = React.useState(null)
+  
 
   const token= localStorage.getItem("token")
 
@@ -116,7 +117,10 @@ export default function Queue() {
     })
     .then((res)=>{
       console.log(res.data.data);
-      setData(res.data.data)
+      const filterData=res.data.data.filter(Queue=>
+        Queue.subcatagoryID && Queue.subcatagoryID.catagoryID && Queue.subcatagoryID.catagoryID.status=== 'on'
+      )
+      setData(filterData)
       localStorage.setItem("count3",res.data.data.length)
     })
     .catch((er)=>{
@@ -186,7 +190,7 @@ export default function Queue() {
   const handleClose = () => {
     setOpen(false);
   };
-
+ 
   return (
     <Header>
       <Grid container spacing={2}>
