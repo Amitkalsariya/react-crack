@@ -97,7 +97,9 @@ export default function Category() {
     })
       .then((res) => {
         console.log(res.data.data);
-        setData1(res.data.data)
+        const active = res.data.data.filter(el => el.status === 'on');
+        setData1(active);
+        
 
       })
       .catch((error) => {

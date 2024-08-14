@@ -14,12 +14,13 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
+
 const CustomButton = styled(Button)({
   backgroundColor: '#2F3C7E',
   color: '#fff',
@@ -27,9 +28,9 @@ const CustomButton = styled(Button)({
     backgroundColor: '#2F3C7E',
   },
 });
+
 const CustomButton1 = styled(Button)({
   color: '#2F3C7E',
-
   '&:hover': {
     color: '#2F3C7E',
   },
@@ -54,46 +55,37 @@ const ResponsiveTable = styled('table')({
     fontWeight: 'normal',
   },
 });
+
 export default function Queue() {
   const [open, setOpen] = React.useState(false);
-  const [data,setData]=React.useState([])
-  const [data1,setData1]=React.useState([])
-  const [data2,setData2]=React.useState([])
-  const [id, setId] = React.useState(null)
-  
+  const [data, setData] = React.useState([]);
+  const [data1, setData1] = React.useState([]);
+  const [data2, setData2] = React.useState([]);
+  const [id, setId] = React.useState(null);
+  const [value, setValue] = React.useState({ questions: '', answer: '', subcatagoryID: '' });
+  const token = localStorage.getItem("token");
 
-  const token= localStorage.getItem("token")
+  React.useEffect(() => {
+    qa();
+    sub();
+    add();
+  }, []);
 
-  const [value, setValue] = React.useState(
-    { questions: '', answer: '',subcatagoryID:'' }
-  )
-  console.log(token); 
-  React.useEffect(()=>{
-    qa()
-  },[])
-  React.useEffect(() => {
-    sub()
-  }, [])
-  React.useEffect(() => {
-    add()
-  }, [])
   function add() {
-
     axios.get("https://interviewhub-3ro7.onrender.com/catagory/", {
-      headers:
-      {
+      headers: {
         Authorization: token
       }
     })
       .then((res) => {
         console.log(res.data.data);
-        setData1(res.data.data)
-
+        setData1(res.data.data);
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
+
   function sub() {
     axios.get("https://interviewhub-3ro7.onrender.com/subcatagory/", {
       headers: {
@@ -102,64 +94,67 @@ export default function Queue() {
     })
       .then((res) => {
         console.log(res.data.data);
-        setData2(res.data.data)
-
+  
+        const active = res.data.data.filter(el => el.status === 'on');
+        setData2(active);
       })
       .catch((er) => {
         console.log(er);
-      })
+      });
   }
+
   function qa() {
-    axios.get("https://interviewhub-3ro7.onrender.com/questions",{
-      headers:{
-        Authorization:token
+    axios.get("https://interviewhub-3ro7.onrender.com/questions", {
+      headers: {
+        Authorization: token
       }
     })
-    .then((res)=>{
-      console.log(res.data.data);
-      const filterData=res.data.data.filter(Queue=>
-        Queue.subcatagoryID && Queue.subcatagoryID.catagoryID && Queue.subcatagoryID.catagoryID.status=== 'on'
-      )
-      setData(filterData)
-      localStorage.setItem("count3",res.data.data.length)
-    })
-    .catch((er)=>{
-      console.log(er);
-    })
-  }
-  const handleD = (values) => {
-    if(id!=null)
-    {
-      axios.patch("https://interviewhub-3ro7.onrender.com/questions/"+id,values,{
-        headers:{
-          Authorization:token
-        }
-      })  
-      .then((res)=>{
-        qa()
-        handleClose()
-        setId(null)
+      .then((res) => {
+        console.log(res.data.data);
+        const filterData = res.data.data.filter(Queue =>
+          Queue.subcatagoryID && Queue.subcatagoryID.catagoryID && Queue.subcatagoryID.catagoryID.status === 'on'
+        );
+        setData(filterData);
+        localStorage.setItem("count3", res.data.data.length);
       })
       .catch((er) => {
         console.log(er);
-      })
-    }
-    else{
+      });
+  }
 
-      axios.post("https://interviewhub-3ro7.onrender.com/questions/create",values,{
-        headers:{
-          Authorization:token
-        }
-      })
-      .then((res)=>{
-        console.log(res.data.data);
-        qa()
-        handleClose()
-      })
-      .catch((er)=>{
-        console.log(er);
-      })
-    }
+  const handleD = (values) => {
+    // Check if subcategoryID is valid
+   
+      if (id != null) {
+        axios.patch("https://interviewhub-3ro7.onrender.com/questions/" + id, values, {
+          headers: {
+            Authorization: token
+          }
+        })
+          .then((res) => {
+            qa();
+            handleClose();
+            setId(null);
+          })
+          .catch((er) => {
+            console.log(er);
+          });
+      } else {
+        axios.post("https://interviewhub-3ro7.onrender.com/questions/create", values, {
+          headers: {
+            Authorization: token
+          }
+        })
+          .then((res) => {
+            console.log(res.data.data);
+            qa();
+            handleClose();
+          })
+          .catch((er) => {
+            console.log(er);
+          });
+      }
+  
   };
 
   const handleDelete = (id) => {
@@ -170,19 +165,23 @@ export default function Queue() {
     })
       .then((res) => {
         console.log("Success");
-        qa()
-      })  
+        qa();
+      })
       .catch((er) => {
         console.log(er);
-      })
-  }
+      });
+  };
+
   const handleEdit = (el, id) => {
-    handleClickOpen()
+    handleClickOpen();
     setValue({
-     questions: el.questions, answer: el.answer,subcatagoryID:el.subcatagoryID
-    })
-      setId(id)
-    }
+      questions: el.questions,
+      answer: el.answer,
+      subcatagoryID: el.subcatagoryID
+    });
+    setId(id);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -190,7 +189,7 @@ export default function Queue() {
   const handleClose = () => {
     setOpen(false);
   };
- 
+
   return (
     <Header>
       <Grid container spacing={2}>
@@ -199,68 +198,64 @@ export default function Queue() {
             <CustomButton onClick={handleClickOpen}>
               Add Q & A
             </CustomButton>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-            >
+            <Dialog open={open} onClose={handleClose}>
               <DialogTitle>Add Question</DialogTitle>
               <DialogContent>
                 <DialogContentText></DialogContentText>
                 <Formik
-                enableReinitialize
+                  enableReinitialize
                   onSubmit={handleD}
                   initialValues={value}
                 >
-                  {({values,setFieldValue})=>(
-                  <Form>
-                    <Field
-                      autoFocus
-                      margin="dense"
-                      id="questions"
-                      name="questions"
-                      label="Add Question "
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      as={TextField}
-                    />
-                    <Field
-                      autoFocus
-                      margin="dense"
-                      id="answer"
-                      name="answer"
-                      label="Answer"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      as={TextField}
-                    />
-                    
+                  {({ values, setFieldValue }) => (
+                    <Form>
+                      <Field
+                        autoFocus
+                        margin="dense"
+                        id="questions"
+                        name="questions"
+                        label="Add Question "
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        as={TextField}
+                      />
+                      <Field
+                        autoFocus
+                        margin="dense"
+                        id="answer"
+                        name="answer"
+                        label="Answer"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        as={TextField}
+                      />
                       <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Sub Catagory</InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              label="subcatagoryID"
-                              name='subcatagoryID'
-                              value={values.subcatagoryID}
-                              onChange={(e) => setFieldValue('subcatagoryID',e.target.value)}
-                            >
-                              {
-                                data2.map((el, i) => (
- 
-                                  <MenuItem value={el._id}>{el.subCatagoryname}</MenuItem>
-                                ))}
-                            </Select>
-                          </FormControl>
-                        </Box>
-                    <DialogActions>
-                      <CustomButton type="submit" variant="contained">
-                        Submit
-                      </CustomButton>
-                    </DialogActions>
-                  </Form>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">Sub Category</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="subcatagoryID"
+                            name='subcatagoryID'
+                            value={values.subcatagoryID}
+                            onChange={(e) => setFieldValue('subcatagoryID', e.target.value)}
+                          >
+                            {
+                              data2.map((el, i) => (
+                                <MenuItem key={el._id} value={el._id}>{el.subCatagoryname}</MenuItem>
+                              ))
+                            }
+                          </Select>
+                        </FormControl>
+                      </Box>
+                      <DialogActions>
+                        <CustomButton type="submit" variant="contained">
+                          Submit
+                        </CustomButton>
+                      </DialogActions>
+                    </Form>
                   )}
                 </Formik>
               </DialogContent>
@@ -281,26 +276,22 @@ export default function Queue() {
               </tr>
             </thead>
             <tbody>
-              {/* Add table rows here */}
-            </tbody>
-            {
-              data.map((el, i) => (
-                <tr>
+              {data.map((el, i) => (
+                <tr key={el._id}>
                   <td>{i + 1}</td>
                   <td>{el.questions}</td>
                   <td>{el.answer}</td>
                   <td>{el.subcatagoryID?.subCatagoryname}</td>
-                <td>{el.subcatagoryID?.catagoryID?.catagoryName}</td>
+                  <td>{el.subcatagoryID?.catagoryID?.catagoryName}</td>
                   <td>
                     <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>
                   </td>
                   <td>
                     <CustomButton1 onClick={() => handleEdit(el, el._id)}><EditIcon /></CustomButton1>
                   </td>
-
                 </tr>
-              ))
-            }
+              ))}
+            </tbody>
           </ResponsiveTable>
         </Grid>
       </Grid>
