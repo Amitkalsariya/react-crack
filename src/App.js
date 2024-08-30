@@ -15,6 +15,7 @@ import {
 
 } from "react-router-dom";
 import MainHeader from "./Pages/MainHeader";
+import MainPage from "./Pages/MainPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           
        </Router>  
        {/* <MainHeader></MainHeader> */}
+       {/* <MainPage></MainPage> */}
     </div>
   );
 }
