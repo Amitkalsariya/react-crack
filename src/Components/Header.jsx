@@ -23,6 +23,7 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import MainPage from '../Pages/MainPage';
 
 const drawerWidth = 240;
 
@@ -138,6 +139,7 @@ export default function Header({children}) {
         {children}
       </Box>
     </Box>
+    
   );
 
 }

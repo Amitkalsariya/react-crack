@@ -3,12 +3,13 @@ import { AppBar, Toolbar, Typography, Button, IconButton, useMediaQuery, useThem
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+import MainPage from './MainPage';
 
 // Styled components
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: 'white',
   color: 'black',
-  boxShadow: theme.shadows[4],
+  boxShadow: "none",
   height: '80px', // Adjust the height here
 }));
 
@@ -99,6 +100,7 @@ const MainHeader = () => {
           )}
         </CustomToolbar>
       </CustomAppBar>
+      <MainPage></MainPage>
     </>
   );
 };
