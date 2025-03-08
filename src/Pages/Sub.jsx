@@ -1,0 +1,398 @@
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid'; // Import Grid from Material-UI
+import { Field, Form, Formik } from 'formik';
+import Header from '../Components/Header';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+const ResponsiveTable = styled('table')({
+  width: '100%',
+  borderCollapse: 'collapse',
+  overflowX: 'auto',
+  '& th, td': {
+    padding: '15px',
+    borderBottom: '1px solid #ccc',
+    textAlign: 'center',
+    '@media (max-width: 768px)': {
+      fontSize: '14px',
+      padding: '10px',
+    },
+  },
+  '& th': {
+    backgroundColor: '#2F3C7E',
+    color: 'white',
+    fontWeight: 'normal',
+  },
+});
+
+export default function Category() {
+  const CustomButton = styled(Button)({
+    backgroundColor: '#2F3C7E',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#2F3C7E',
+    },
+  });
+
+  const CustomButton1 = styled(Button)({
+    color: '#2F3C7E',
+
+    '&:hover': {
+      color: '#2F3C7E',
+
+
+    },
+  });
+  const [age, setAge] = React.useState('');
+
+  const [id, setId] = React.useState(null)
+  const [value, setValue] = React.useState(
+    { subCategoryname: '', categoryID: '' }
+  )
+
+  const [cat, setCat] = React.useState('')
+  const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState([])
+  const [data1, setData1] = React.useState([])
+  const [searchvalue, setSearchvalue] = React.useState('')
+  const token = localStorage.getItem("token")
+  console.log("token:-", token);
+  React.useEffect(() => {
+    sub()
+    add()
+  }, [])
+
+  const Blueswitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: '#2F3C7E',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#102C57',
+    },
+  }));
+  function add() {
+
+    axios.get("https://interviewback-ucb4.onrender.com/category/", {
+      headers:
+      {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        const active = res.data.data.filter(el => el.status === 'on');
+        setData1(active);
+        
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+  function sub() {
+    axios.get("https://interviewback-ucb4.onrender.com/subcategory/", {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+
+        setData(res.data.data)
+        localStorage.setItem("count2", res.data.data.length)
+
+      })
+      .catch((er) => {
+        console.log(er);
+      })
+  }
+
+  const datacategory = (e) => {
+    setCat(e.target.value)
+  }
+
+  const handleD = (values) => {
+    // console.log("Insert value ==> "+values.categoryID);
+    if (id != null) {
+      axios.patch("https://interviewback-ucb4.onrender.com/subcategory/" + id, values, {
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          sub()
+          handleClose()
+          setId(null)
+        })
+        .catch((er) => {
+          console.log(er);
+        })
+    }
+    else {
+      axios.post("https://interviewback-ucb4.onrender.com/subcategory/create", values, {
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          console.log(res);
+          sub()
+          handleClose()
+        })
+        .catch((er) => {
+          console.log(er);
+        })
+    }
+    setValue({
+      subCategoryname: '',
+      categoryID: ''
+    })
+  }
+  const handleDelete = (id) => {
+    axios.delete("https://interviewback-ucb4.onrender.com/subcategory/" + id, {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        console.log("Success");
+        sub()
+      })
+      .catch((er) => {
+        console.log(er);
+      })
+  }
+  const handleEdit = (el, id) => {
+    handleClickOpen()
+    setValue({
+      subCategoryname: el.subCategoryname,
+      categoryID: el.categoryID
+    })
+    setId(id)
+  }
+  const handlestatus = (e, el, id) => {
+    console.log("Success " + e.target.checked);
+    if (el.categoryID.status == 'on') {
+      axios.patch("https://interviewback-ucb4.onrender.com/subcategory/" + id, {
+        'status': e.target.checked ? 'on' : 'off'
+      }, {
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          console.log(res.data.data);
+          sub()
+          
+        })
+        .catch((er) => {
+          console.log(er);
+        })
+    }
+    
+  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // console.log(data);
+  const filteredData1 = data.filter((el) =>
+    el.subCategoryname.toLowerCase().includes(searchvalue.toLowerCase())
+  );
+
+ 
+  return (
+    <Header>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Stack spacing={2} direction="row" sx={{ mb: 2 }}>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={data}
+              getOptionLabel={(values) => values.subCategoryname}
+              sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
+              renderInput={(params) => <TextField {...params} label=" Sub - Category"
+              />}
+              onInputChange={(event, el) => {
+                setSearchvalue(el);
+              }}
+            />
+            <React.Fragment>
+              <CustomButton onClick={handleClickOpen} sx={{ width: { md: "20%", sm: "40%", xs: "50%" } }} >
+                Add Sub Category
+              </CustomButton>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+
+              >
+                <DialogTitle>Add Sub Category</DialogTitle>
+                <DialogContent>
+                  <DialogContentText></DialogContentText>
+                  {/* <Formik
+                    initialValues={{
+                      subCategoryname : ''
+                    }}
+                    onSubmit={handleD}
+                  >
+                    <Form>
+                      <Field name="subCategoryname"></Field><br />
+                      <button type='submit'>Hello</button>
+                    </Form>
+                  </Formik> */}
+                  <Formik
+                    initialValues={value}
+                    onSubmit={handleD}
+                  >
+                    {({ values, setFieldValue }) => (
+
+                      <Form>
+                        <Field
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          name="subCategoryname"
+                          label="Sub category"
+                          type="text"
+                          fullWidth
+                          variant="outlined"
+                          as={TextField}
+                          sx={{ mb: 2 }}
+                        />
+                        <br />
+                        <Box sx={{ minWidth: 120 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Catagory</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              label="categoryID"
+                              name='categoryID'
+                              value={values.categoryID}
+                              onChange={(e) => setFieldValue('categoryID', e.target.value)}
+                            >
+                              {
+                                data1.map((el, i) => (
+
+                                  <MenuItem value=
+
+                                    {el._id}>{el.categoryName}</MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <DialogActions>
+                          <CustomButton type="submit" variant="contained">
+                            Submit
+                          </CustomButton>
+                        </DialogActions>
+                      </Form>
+                    )}
+                  </Formik>
+                </DialogContent>
+              </Dialog>
+            </React.Fragment>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <ResponsiveTable>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Sub Category Name</th>
+                <th>Category Name</th>
+                <th>Status</th>
+                <th>Delete</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            {/* <tbody>
+              <tr>
+                <td>1</td>
+                <td>Amit</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>N</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Category</td>
+                <td>
+                  <FormControlLabel control={<Switch defaultChecked />} />
+                </td>
+                <td>
+                  <DeleteIcon />
+                </td>
+                <td>
+                  <EditIcon />
+                </td>
+              </tr>
+            </tbody> */}
+            {
+              filteredData1.map((el, i) => (
+                <tr>
+                  <td>{i + 1}</td>
+                  <td>{el.subCategoryname}</td>
+                  <td>{el.categoryID?.categoryName}</td>
+                  <td>
+                    <FormControlLabel control={<Blueswitch  checked={el.status === 'on'} onChange={(e) => handlestatus(e, el, el._id)} />} />
+                  </td>
+                  <td>
+                    <CustomButton1 onClick={() => handleDelete(el._id)}> <DeleteIcon /></CustomButton1>
+                  </td>
+                  <td>
+                    <CustomButton1 onClick={() => handleEdit(el, el._id)}><EditIcon /></CustomButton1>
+                  </td>
+
+                </tr>
+              ))
+            }
+
+          </ResponsiveTable>
+        </Grid>
+      </Grid>
+    </Header>
+  );
+}
+
+
